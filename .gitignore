@@ -1,0 +1,67 @@
+# ================================
+# IntelliJ IDEA-specific files
+# ================================
+.idea/
+*.iml
+*.iws
+out/
+
+# ================================
+# Java & Maven/Gradle
+# ================================
+*.class
+*.jar
+*.war
+*.ear
+*.log
+*.hprof
+
+# Maven target directory
+target/
+
+# Gradle build directories
+.gradle/
+build/
+
+# Gradle wrapper files (optional)
+gradle/
+gradlew
+gradlew.bat
+
+# ================================
+# OS-specific files
+# ================================
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ================================
+# Log files
+# ================================
+logs/
+log/
+
+# ================================
+# Temporary files & caches
+# ================================
+*.swp
+*.swo
+*.tmp
+*.bak
+
+# ================================
+# Environment & Security files
+# ================================
+.env
+*.key
+*.pem
+*.crt
+*.p12
+*.pfx
+
+# ================================
+# Database files
+# ================================
+*.sqlite
+*.db
