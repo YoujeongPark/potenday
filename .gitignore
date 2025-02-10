@@ -24,9 +24,9 @@ target/
 build/
 
 # Gradle wrapper files (optional)
-gradle/
-gradlew
-gradlew.bat
+#gradle/
+#gradlew
+#gradlew.bat
 
 # ================================
 # OS-specific files
