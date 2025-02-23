@@ -1,5 +1,8 @@
 package com.bside.potenday.model;
 
+import com.bside.potenday.dto.SlangDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -38,5 +41,12 @@ public class Slang {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
+    @JsonIgnore
     private Category category;
+
+    @JsonProperty("categoryId") // get Category ID from Category DB
+    public Long getCategoryId() {
+        return (category != null) ? category.getId() : null;
+    }
+
 }

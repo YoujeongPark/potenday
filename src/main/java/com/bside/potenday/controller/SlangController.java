@@ -16,11 +16,12 @@ import java.util.List;
 @RequestMapping("/api")
 public class SlangController {
 
-    @Autowired
-    SlangService slangservice;
+    private final SlangService slangservice;
+
     @GetMapping("/findSlangs")
     public List<Slang> findSlangs(){
-        return slangservice.findAllSlangs();
+        List<Slang> slangs = slangservice.findAllSlangs();
+        return slangs;
     }
 
 }

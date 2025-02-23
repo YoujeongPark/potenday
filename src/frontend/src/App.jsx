@@ -6,8 +6,8 @@ function App() {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    fetch('/api/currentDate')
-      .then(response => response.text())
+    fetch('/api/findSlangs')
+      .then(response => response.json())
       .then(message => {
         console.log("message> ?", message)
         setMessage(message);
