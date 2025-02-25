@@ -1,10 +1,14 @@
 import { logo } from '../assets/images.js';
-console.log(logo);
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
-    <header>
-      <h1><img src={String(logo)} alt="로고" /></h1>
+    <header id="header">
+      <h1 className="logo">
+        <Link to="/">
+          <object data={String(logo)} type="image/svg+xml" aria-label="It Dictionary" />
+        </Link>
+      </h1>
     </header>
   );
 };
