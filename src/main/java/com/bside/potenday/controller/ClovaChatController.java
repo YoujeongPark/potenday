@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/chat")
 public class ClovaChatController {
@@ -17,7 +19,9 @@ public class ClovaChatController {
     }
 
     @PostMapping("/send")
-    public String chat(@RequestBody String userMessage) {
+    public String chat(@RequestBody Map<String, String> request) {
+        String userMessage = request.get("message");
         return clovaChatService.getChatResponse(userMessage);
     }
 }
+
