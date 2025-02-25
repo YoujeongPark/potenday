@@ -1,7 +1,12 @@
-import {useState, useEffect} from 'react'
-import './App.css'
+import {useState, useEffect} from 'react';
+import './scss/style.scss';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Layout from './layout/Layout';
+import MainPage from './pages/Mainpage';
+import SearchPage from './pages/SearchPage';
+import QuizPage from './pages/QuizPage';
 
-function App() {
+const App = () => {
   const [count, setCount] = useState(0)
   const [message, setMessage] = useState("");
 
@@ -16,17 +21,16 @@ function App() {
 
 
   return (
-    <>
-      <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">{message}</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    </>
-  )
-}
+    <Router>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<MainPage />} />
+          <Route path="search" element={<SearchPage />} />
+          <Route path="quiz" element={<QuizPage />} />
+        </Route>
+      </Routes>
+    </Router>
+  );
+};
 
 export default App
