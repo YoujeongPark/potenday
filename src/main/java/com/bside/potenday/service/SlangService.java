@@ -18,4 +18,8 @@ public class SlangService {
         return slangRepository.findAll();
     }
 
+    public List<Slang> findSlangsByCategoryId(Long categoryId) {
+        return slangRepository.findByCategoryId(categoryId);
+    }
+
 }
