@@ -24,17 +24,19 @@ const SearchBar = () => {
   };
 
   return (
-    <form onSubmit={searchSubmit}>
-      <div className="search-bar">
-        <input
-          type="search"
-          placeholder="검색어를 입력하세요."
-          value={searchWord}
-          onChange={(e) => setSearchWord(e.target.value)}
-        />
-        <button type="submit" className="btn btn-search">검색</button>
-      </div>
-    </form>
+    <div className="search-bar">
+      <form onSubmit={searchSubmit}>
+        <div className="input-group">
+          <input
+            type="search"
+            placeholder="검색어를 입력하세요."
+            value={searchWord}
+            onChange={(e) => setSearchWord(e.target.value)}
+          />
+          <button type="submit" className="btn btn-search">검색</button>
+        </div>
+      </form>
+    </div>
   );
 };
 

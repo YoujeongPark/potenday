@@ -1,50 +1,124 @@
-import { useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useCategories } from '../context/categoryContext';
 import SearchBar from '../component/SearchBar';
-import SearchCategory from '../component/SearchCategory';
-import WordList from '../component/WordList';
-import {logo} from "../assets/images.js";
+import HeaderSub from "../layout/HeaderSub.jsx";
+import { searchCategory, check } from "../assets/images.js";
 
 const SearchPage = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
-  const categoryId = queryParams.get("category");
-
+  const query = queryParams.get("query") || ""; // 검색어
+  const categoryId = queryParams.get("category"); // 카테고리 ID
   const categories = useCategories();
-  const matchCate = categories.find(item => item.id.toString() === categoryId);
-  const matchCateIcon = matchCate?.icon ? matchCate.icon : "";
-  const matchCateName = matchCate?.categoryName ? matchCate.categoryName : "";
+
+  // 랜덤 카테고리 ID 만들기
+  const [randomCategoryId, setRandomCategoryId] = useState(null);
+
+  useEffect(() => {
+    if (!categoryId && categories.length > 0) {
+      const randomCategory = categories[Math.floor(Math.random() * categories.length)];
+      setRandomCategoryId(randomCategory.id);
+    }
+  }, [categoryId, categories]);
+
+  // search-visual용 카테고리 ID 설정
+  const visualCategoryId = categoryId || randomCategoryId || "";
+  const visualCate = categories.find(item => item.id.toString() === visualCategoryId.toString());
+  const visualCateIcon = visualCate?.icon || "";
+  const visualCateName = visualCate?.categoryName || "전체";
+
+  // 카테고리 ID 설정
+  const finalCategoryId = categoryId || "";
+  const matchCate = categories.find(item => item.id.toString() === finalCategoryId.toString());
+  const matchCateName = matchCate?.categoryName || "전체";
+
+  // 카테고리 선택 모달
+  const [isOpen, setIsOpen] = useState(false);
+  const openModal = () => setIsOpen(true);
+  const closeModal = (e) => {
+    if (e.target.classList.contains("modal")) {
+      setIsOpen(false);
+    }
+  };
 
   return (
-    <div className="search-page">
-      <section className="search-visual">
-        <h2 className="title">오늘의 {matchCateName} 신조어!</h2>
-        <dl className="today-word">
-          <dt>"얼죽아"</dt>
-          <dd>
-            "얼어 죽어도 아이스" 의 줄임말로 날씨가 아무리 추워도 따뜻한 음료 대신
-            차가운 음료를 선호하는 사람들을 뜻합니다.
-          </dd>
-        </dl>
-        {matchCateIcon && (
-          <div className="icon">
-            <object data={matchCateIcon} type="image/svg+xml" />
+    <div id="wrap" className="search-page">
+      <HeaderSub />
+      <main id="main" role="main">
+        <section className="search-visual bg-gradient">
+          <div className="inner">
+            <h2 className="text-s-4">오늘의 신조어!</h2>
+            <dl>
+              <dt><span className="text-sb-8">{visualCateName}</span></dt>
+              <dd className="text-r-4">
+                "얼어 죽어도 아이스" 의 줄임말로
+                날씨가 아무리 추워도 따뜻한 음료 대신
+                차가운 음료를 선호하는 사람들을 뜻합니다.
+              </dd>
+            </dl>
+            <div className="icon">
+              {visualCateIcon ? (
+                <object data={visualCateIcon} type="image/svg+xml" />
+              ) : null}
+            </div>
+          </div>
+        </section>
+        <div className="contents-wrap">
+          <section className="search-option-wrap">
+            <SearchBar />
+            <div className="search-category">
+              <button type="button" className="btn btn-open-modal" onClick={openModal}>
+                <div className="icon">
+                  <object data={String(searchCategory)} type="image/svg+xml" />
+                </div>
+                <span className="text-xb-10">{matchCateName}</span>
+              </button>
+            </div>
+          </section>
+        </div>
+        {isOpen && (
+          <div id="modal-category" className="modal show" onClick={closeModal}>
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h2 className="modal-title">카테고리 선택</h2>
+                </div>
+                <div className="modal-body">
+                  <ul className="select-category-list">
+                    <li className={!categoryId ? 'active' : ''}>
+                      <Link to="/search" onClick={() => setIsOpen(false)}>
+                        전체
+                        {!categoryId && (
+                          <div className="icon">
+                            <object data={check} type="image/svg+xml" />
+                          </div>
+                        )}
+                      </Link>
+                    </li>
+                    {categories.map((category) => (
+                      <li key={category.id} className={categoryId === category.id.toString() ? 'active' : ''}>
+                        <Link
+                          to={'?query=' + query + '&category=' + category.id}
+                          onClick={() => setIsOpen(false)}
+                        >
+                          {category.categoryName}
+                          {categoryId === category.id.toString() && (
+                            <div className="icon">
+                              <object data={check} type="image/svg+xml" />
+                            </div>
+                          )}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
           </div>
         )}
-      </section>
-      <div className="contents-wrap">
-        <div className="search-bar-wrap">
-          <SearchBar />
-          <SearchCategory />
-        </div>
-        <div className="list-option-wrap">
-          <h2>
-            {matchCate?.categoryName || "전체"} <span>51</span>
-          </h2>
-          <button type="button">!</button>
-        </div>
-        <WordList />
-      </div>
+      </main>
     </div>
   );
 };
