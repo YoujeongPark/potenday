@@ -92,7 +92,7 @@ const SearchPage = () => {
                         전체
                         {!categoryId && (
                           <div className="icon">
-                            <object data={check} type="image/svg+xml" />
+                            <object data={String(check)} type="image/svg+xml" />
                           </div>
                         )}
                       </Link>
@@ -106,7 +106,7 @@ const SearchPage = () => {
                           {category.categoryName}
                           {categoryId === category.id.toString() && (
                             <div className="icon">
-                              <object data={check} type="image/svg+xml" />
+                              <object data={String(check)} type="image/svg+xml" />
                             </div>
                           )}
                         </Link>
