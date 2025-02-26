@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useCategories } from '../context/categoryContext';
+import { useCategories } from '../context/CategoryContext';
+import HeaderSub from "../layout/HeaderSub";
 import SearchBar from '../component/SearchBar';
-import HeaderSub from "../layout/HeaderSub.jsx";
-import { searchCategory, check } from "../assets/images.js";
+import WordList from '../component/WordList';
+import {searchCategory, check, tooltip, logo} from "../assets/images.js";
 
 const SearchPage = () => {
   const location = useLocation();
@@ -51,7 +52,7 @@ const SearchPage = () => {
           <div className="inner">
             <h2 className="text-s-4">오늘의 신조어!</h2>
             <dl>
-              <dt><span className="text-sb-8">{visualCateName}</span></dt>
+              <dt><span className="text-sb-8">얼죽아</span></dt>
               <dd className="text-r-4">
                 "얼어 죽어도 아이스" 의 줄임말로
                 날씨가 아무리 추워도 따뜻한 음료 대신
@@ -76,6 +77,23 @@ const SearchPage = () => {
                 <span className="text-xb-10">{matchCateName}</span>
               </button>
             </div>
+          </section>
+          <section className="search-result-wrap">
+            <div className="d-flex justify-space-between align-items-center">
+              <h2>{matchCateName} <span className="text-blue">51</span></h2>
+              <div className="tooltip">
+                <div className="icon">
+                  <object data={String(tooltip)} type="image/svg+xml" />
+                </div>
+                <div className="tooltip-box">
+                  <p>
+                    대체어는 국립국어원에서 선정한 <br />
+                    신조어를 대체할 우리말입니다.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <WordList />
           </section>
         </div>
         {isOpen && (

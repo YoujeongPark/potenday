@@ -7,6 +7,7 @@ export { default as home } from './icon/home.svg';
 export { default as arrow } from './icon/arrow.svg';
 export { default as back } from './icon/back.svg';
 export { default as check } from './icon/check.svg';
+export { default as tooltip } from './icon/tooltip.svg';
 export { default as searchCategory } from './icon/search_category.svg';
 export { default as category01 } from './icon/category01.svg';
 export { default as category02 } from './icon/category02.svg';
