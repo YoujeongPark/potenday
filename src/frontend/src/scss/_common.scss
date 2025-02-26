@@ -35,6 +35,18 @@
   line-height: 30px;
 }
 
+.text-sb-6 {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 26px;
+}
+
+.text-xb-6 {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 24px;
+}
+
 .text-xb-4 {
   font-size: 16px;
   font-weight: 500;
@@ -53,10 +65,22 @@
   line-height: 24px;
 }
 
+.text-r-6 {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 21px;
+}
+
 .text-xr-6 {
   font-size: 14px;
   font-weight: 300;
   line-height: 18px;
+}
+
+.text-xr-8 {
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 14px;
 }
 
 .text-xb-10 {
@@ -72,12 +96,24 @@
 .text-white {
   color: #fff !important;
 }
+
+.text-blue {
+  color: #3db4f7 !important;
+}
 /* ===== End Text color ===== */
 
 
 /* ===== Bg ===== */
 .bg-gradient {
-  background: linear-gradient(120deg, #00c4b8 55%, #3db4f7 100%);
+  background: linear-gradient(120deg, #00c4b8 55%, #3db4f7 100%) !important;
+}
+
+.bg-blue {
+  background-color: #3db4f7 !important;
+}
+
+.bg-yellow {
+  background-color: #ffce3f !important;
 }
 /* ===== End Bg ===== */
 
@@ -87,7 +123,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  outline: none;
+  outline: none !important;
   border: 1px solid transparent;
   background-color: transparent;
   height: 60px;
@@ -135,6 +171,48 @@
   height: 24px;
 }
 /* ===== End Icon ===== */
+
+
+/* ===== Badge ===== */
+.badge {
+  display: inline-block;
+  border-radius: 100px;
+  background-color: #eee;
+  min-width: 56px;
+  padding: 0 4px;
+  font-size: 12px;
+  color: #fff;
+  font-weight: 200;
+  line-height: 24px;
+  text-align: center;
+  vertical-align: middle;
+  font-family: 'Pretendard', sans-serif;
+}
+/* ===== End Badge ===== */
+
+
+/* ===== Tooltip ===== */
+.tooltip {
+  position: relative;
+
+  &-box {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    min-width: 220px;
+    padding: 8px 0;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.12), 0 4px 8px 0 rgba(0, 0, 0, 0.08), 0 0 4px 0 rgba(0, 0, 0, 0.08);
+    text-align: center;
+
+    p {
+      font-size: 14px;
+      font-weight: 300;
+    }
+  }
+}
+/* ===== End Tooltip ===== */
 
 
 /* ===== Modal ===== */

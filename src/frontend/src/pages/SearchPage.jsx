@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useCategories } from '../context/CategoryContext';
 import HeaderSub from "../layout/HeaderSub";
 import SearchBar from '../component/SearchBar';
+import Tooltip from "../component/Tooltip";
 import WordList from '../component/WordList';
 import {searchCategory, check, tooltip, logo} from "../assets/images.js";
 
@@ -80,18 +81,11 @@ const SearchPage = () => {
           </section>
           <section className="search-result-wrap">
             <div className="d-flex justify-space-between align-items-center">
-              <h2>{matchCateName} <span className="text-blue">51</span></h2>
-              <div className="tooltip">
-                <div className="icon">
-                  <object data={String(tooltip)} type="image/svg+xml" />
-                </div>
-                <div className="tooltip-box">
-                  <p>
-                    대체어는 국립국어원에서 선정한 <br />
-                    신조어를 대체할 우리말입니다.
-                  </p>
-                </div>
-              </div>
+              <h2 className="text-sb-6">
+                {matchCateName}
+                <span className="text-xr-8 text-blue">51</span>
+              </h2>
+              <Tooltip />
             </div>
             <WordList />
           </section>
