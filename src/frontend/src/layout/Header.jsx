@@ -1,5 +1,5 @@
-import { logo } from '../assets/images.js';
 import { Link } from "react-router-dom";
+import { logo } from '../assets/images.js';
 
 const Header = () => {
   return (

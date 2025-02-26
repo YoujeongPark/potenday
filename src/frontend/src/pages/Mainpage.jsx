@@ -1,7 +1,7 @@
-import { character, game } from '../assets/images.js';
 import { Link } from 'react-router-dom';
 import SearchBar from '../component/SearchBar';
 import CategoryList from '../component/CategoryList';
+import { character, game } from '../assets/images.js';
 
 const MainPage = () => {
   return (

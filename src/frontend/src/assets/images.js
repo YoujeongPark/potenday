@@ -1,3 +1,4 @@
+// 이미지 export
 export { default as logo } from './common/logo.svg';
 export { default as character } from './common/character.svg';
 export { default as book } from './icon/book.svg';
