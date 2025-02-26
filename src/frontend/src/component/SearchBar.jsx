@@ -1,11 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const SearchBar = () => {
-  const [searchWord, setSearchWord] = useState('');
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  // Submit 실행 시
+  // ✅ URL에서 query 가져오기
+  const queryParams = new URLSearchParams(location.search);
+  const query = queryParams.get('query') || '';
+  const [searchWord, setSearchWord] = useState(query);
+
+  useEffect(() => {
+    setSearchWord(query);
+  }, [query]);
+
+  // ✅ Submit 실행 시
   const searchSubmit = (e) => {
     e.preventDefault();
+    if (searchWord.trim()) {
+      queryParams.set('query', searchWord);
+      navigate('/search?' + queryParams.toString());
+    }
   };
 
   return (

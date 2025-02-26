@@ -11,7 +11,7 @@ const CategoryList = () => {
           <article key={item.id} className="card">
             <Link to={'/search?category=' + item.id}>
               <h3 className="text-xb-4">{item.categoryName}</h3>
-              <p className="text-s-6">{item.description}</p>
+              <p className="text-xr-6">{item.description}</p>
               {item.icon && (
                 <div className="icon">
                   <img src={item.icon} alt={item.categoryName} />

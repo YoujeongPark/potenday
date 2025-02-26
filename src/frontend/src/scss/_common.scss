@@ -1,6 +1,22 @@
 @charset "UTF-8";
 
-/* Text Style */
+
+/* ===== Layout ===== */
+.d-flex {
+  display: flex;
+}
+
+.justify-space-between {
+  justify-content: space-between;
+}
+
+.align-items-center {
+  align-items: center;
+}
+/* ===== End Layout ===== */
+
+
+/* ===== Text style ===== */
 .text-sb-11 {
   font-size: 20px;
   font-weight: 600;
@@ -13,18 +29,29 @@
   line-height: 20px;
 }
 
-.text-s-6 {
+.text-xr-6 {
   font-size: 14px;
-  font-weight: 200;
+  font-weight: 300;
   line-height: 18px;
 }
+/* ===== End Text style ===== */
 
-/* Text Color */
+
+/* ===== Text color ===== */
 .text-white {
   color: #fff !important;
 }
+/* ===== End Text color ===== */
 
-/* Button */
+
+/* ===== Bg ===== */
+.bg-gradient {
+  background: linear-gradient(120deg, #00c4b8 55%, #3db4f7 100%);
+}
+/* ===== End Bg ===== */
+
+
+/* ===== Button ===== */
 .btn {
   display: flex;
   justify-content: center;
@@ -53,9 +80,22 @@
     font-size: 0;
     line-height: 0;
   }
-}
 
-/* Icon */
+  &.btn-text-sm {
+    gap: 4px;
+    height: auto;
+    font-size: 14px;
+
+    span {
+      color: #00c4b8;
+      font-weight: 200;
+    }
+  }
+}
+/* ===== End Button ===== */
+
+
+/* ===== Icon ===== */
 .icon {
   display: flex;
   justify-content: center;
@@ -63,40 +103,4 @@
   width: 24px;
   height: 24px;
 }
-
-/* Search Bar */
-.search-bar {
-  display: flex;
-  position: relative;
-  padding: 16px;
-  border: 1px solid #e5e5e5;
-  background-color: #fafafa;
-
-  input {
-    width: 100%;
-    border: 0;
-    background-color: transparent;
-    outline: none;
-    font-size: 16px;
-    color: #333;
-    font-weight: 300;
-    line-height: 24px;
-    letter-spacing: -0.01em;
-
-    &::placeholder {
-      opacity: .5;
-      color: #333;
-    }
-  }
-}
-
-/* Layout */
-#root {
-  width: 100%;
-  height: 100%;
-}
-
-.contents-wrap {
-  border-radius: 24px 24px 0 0;
-  background-color: #fff;
-}
+/* ===== End Icon ===== */

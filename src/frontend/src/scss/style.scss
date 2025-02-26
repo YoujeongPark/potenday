@@ -4,11 +4,56 @@
 @use "./reset";
 @use "./common";
 
-/* Header */
+
+/* ===== Common style ===== */
+#wrap {
+  width: 100%;
+  min-height: 100vh;
+  padding-bottom: variables.$footerHeight;
+}
+
+.contents-wrap {
+  overflow: hidden;
+  position: relative;
+  z-index: 10;
+  border-radius: 24px 24px 0 0;
+  background-color: #fff;
+}
+
+.search-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  padding: 16px;
+  border: 1px solid #e5e5e5;
+  background-color: #fafafa;
+
+  input {
+    width: calc(100% - 32px);
+    border: 0;
+    background-color: transparent;
+    outline: none;
+    font-size: 16px;
+    color: #333;
+    font-weight: 300;
+    line-height: 24px;
+    letter-spacing: -0.01em;
+
+    &::placeholder {
+      opacity: .5;
+      color: #333;
+    }
+  }
+}
+/* ===== End Common style ===== */
+
+
+/* ==== Header ===== */
 #header {
   display: flex;
   align-items: center;
-  position: fixed;
+  position: absolute;
   left: 50%;
   top: 0;
   z-index: 1000;
@@ -18,13 +63,10 @@
   height: variables.$headerHeight;
   transform: translateX(-50%);
 }
+/* ==== End Header ===== */
 
-/* Main */
-#main {
-  padding-bottom: variables.$footerSpace;
-}
 
-/* Footer */
+/* ==== Footer ===== */
 #footer {
   position: fixed;
   left: 50%;
@@ -86,21 +128,25 @@
     }
   }
 }
+/* ==== End Footer ===== */
 
-/* Main page */
+
+/* ==== Main page ===== */
 .main-page {
-  padding-top: variables.$headerHeight;
-  height: 100%;
-  background: linear-gradient(45deg, #00c4b8, #3db4f7);
 
   .main-visual {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    padding: 20px 16px 104px;
+    padding: variables.$headerHeight 16px 104px;
     text-align: center;
 
-    .text-sb-11 {
+    .inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      padding: 20px 12px 0;
+    }
+
+    h2 {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -113,6 +159,7 @@
 
     .btn {
       gap: 8px;
+      width: 100%;
       font-weight: 500;
 
       .icon {
@@ -135,44 +182,44 @@
         border-top: 0;
       }
     }
-
-    .main-category {
-
-      .category-list {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 24px;
-
-        .card {
-          width: calc((100% - 24px) / 2);
-
-          a {
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            position: relative;
-            padding: 16px 16px 107px 16px;
-            border-radius: 12px;
-            background-color: #fcfdfc;
-            -webkit-box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
-                    box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
-          }
-
-          .icon {
-            position: absolute;
-            right: 8px;
-            bottom: 8px;
-            width: 88px;
-            height: 88px;
-          }
-        }
-      }
-    }
   }
 }
 
-/* Search Page */
+.category-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+
+  .card {
+    width: calc((100% - 24px) / 2);
+
+    a {
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      position: relative;
+      height: 100%;
+      padding: 16px 16px 107px 16px;
+      border-radius: 12px;
+      background-color: #fcfdfc;
+      -webkit-box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .icon {
+      position: absolute;
+      right: 8px;
+      bottom: 8px;
+      width: 88px;
+      height: 88px;
+    }
+  }
+}
+/* ==== End Main page ===== */
+
+
+/* ==== Search page ===== */
 .search-page {
   background: linear-gradient(45deg, #00c4b8, #3db4f7);
 
@@ -187,6 +234,7 @@
     display: flex;
   }
 }
+/* ==== End Search page ===== */
 
 
 
