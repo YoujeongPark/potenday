@@ -20,9 +20,20 @@ public class SlangService {
         return slangRepository.findAll();
     }
 
+    public List<Slang> findSlangs(Long id, String slang) {
+        if (id == null) {
+            return slangRepository.findSlangByWord(slang);
+        } else if (slang == null) {
+            return slangRepository.findByCategoryId(id);
+        } else {
+            return slangRepository.findSlangs(id, slang);
+        }
+    }
+
     public List<Slang> findSlangsByCategoryId(Long categoryId) {
         return slangRepository.findByCategoryId(categoryId);
     }
+
 
     public List<Slang> findSlangByWord(String word) {
         if (word == null || word.trim().isEmpty()) {
