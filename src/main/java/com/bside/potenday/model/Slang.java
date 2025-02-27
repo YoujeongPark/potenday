@@ -28,14 +28,17 @@ public class Slang {
     @LastModifiedDate
     private Timestamp modifiedTime;
 
-    @Column(nullable = false, length = 60)
+    @Column(nullable = false, length = 100)
     private String slangName;
 
-    @Column(nullable = false, length = 60)
+    @Column(nullable = false, length = 100)
     private String slangMeaning;
 
-    @Column(nullable = false, length = 60)
+    @Column(length = 100)
     private String slangSubstitutes;
+
+    @Column(length = 100)
+    private String slangExample;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
@@ -48,3 +51,5 @@ public class Slang {
     }
 
 }
+
+

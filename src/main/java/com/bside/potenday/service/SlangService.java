@@ -6,6 +6,8 @@ import com.bside.potenday.repository.SlangRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -14,12 +16,20 @@ public class SlangService {
 
     final private SlangRepository slangRepository;
 
-    public List<Slang> findAllSlangs(){
+    public List<Slang> findAllSlangs() {
         return slangRepository.findAll();
     }
 
     public List<Slang> findSlangsByCategoryId(Long categoryId) {
         return slangRepository.findByCategoryId(categoryId);
+    }
+
+    public List<Slang> findSlangByWord(String word) {
+        if (word == null || word.trim().isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        return slangRepository.findSlangByWord(word);
     }
 
 }

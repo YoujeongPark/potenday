@@ -20,11 +20,17 @@ public class SlangController {
         return slangservice.findAllSlangs();
     }
 
-    @GetMapping("/findSlangsByCategory/{id}")
+    @GetMapping("/findSlangsByCategory")
     @ResponseBody
-    public List<Slang> findSlangsByCategory(@PathVariable Long id) {
+    public List<Slang> findSlangsByCategory(@RequestParam Long id) {
         return slangservice.findSlangsByCategoryId(id);
-
     }
+
+    @GetMapping("/findSlangsByWord")
+    @ResponseBody
+    public List<Slang> findSlangsByCategory(@RequestParam String slang) {
+        return slangservice.findSlangByWord(slang);
+    }
+
 
 }

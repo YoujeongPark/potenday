@@ -13,4 +13,8 @@ public interface SlangRepository extends JpaRepository<Slang, UUID>, JpaSpecific
 
     @Query("SELECT s FROM Slang s WHERE s.category.id = :categoryId")
     List<Slang> findByCategoryId(@Param("categoryId") Long categoryId);
+
+    @Query("SELECT s FROM Slang s WHERE s.slangName LIKE %:word%")
+    List<Slang> findSlangByWord(String word);
+
 }
