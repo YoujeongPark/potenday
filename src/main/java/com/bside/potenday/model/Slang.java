@@ -31,13 +31,13 @@ public class Slang {
     @Column(nullable = false, length = 100)
     private String slangName;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 300)
     private String slangMeaning;
 
-    @Column(length = 100)
+    @Column(length = 300)
     private String slangSubstitutes;
 
-    @Column(length = 100)
+    @Column(length = 300)
     private String slangExample;
 
     @ManyToOne(fetch = FetchType.LAZY)
