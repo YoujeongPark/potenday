@@ -31,8 +31,10 @@ const MainPage = () => {
               알고싶은 신조어를 검색하세요!
             </h2>
             <Link to="/search" className="search-bar">
-              <span>검색어를 입력하세요.</span>
-              <div className="icon icon-search">검색</div>
+              <p>검색어를 입력하세요.</p>
+              <div className="btn btn-search">
+                <span className="hide">검색</span>
+              </div>
             </Link>
           </section>
           <section className="main-category">
