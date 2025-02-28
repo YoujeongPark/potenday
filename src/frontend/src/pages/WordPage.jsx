@@ -6,26 +6,34 @@ import HeaderSub from "../layout/HeaderSub";
 import CategoryTab from "../component/CategoryTab";
 import Tooltip from "../component/Tooltip";
 import WordList from "../component/WordList";
-import {logo, quotes} from '../assets/images.js';
+import { logo, quotes } from '../assets/images.js';
 
 const WordPage = () => {
   const categories = useCategories();
   const [searchParams] = useSearchParams();
   const categoryId = searchParams.get("category");
   const category = categoryId ? categories.find((item) => String(item.id) === categoryId) : null;
-  const [slangList, setSlangList] = useState([]);
+
+  const [slangList, setSlangList] = useState([]); // 현재 선택된 카테고리 목록
+  const [allSlangList, setAllSlangList] = useState([]); // 전체 데이터 목록
   const [randomSlang, setRandomSlang] = useState(null); // 랜덤 단어 추출 (오늘의 신조어용)
 
   useEffect(() => {
     const fetchSlangs = async () => {
       try {
         let url = "/api/findSlangs";
-        if (categoryId) {
-          url = "/api/findSlangs?id=" + categoryId;
-        }
         const response = await axios.get(url);
+
         if (Array.isArray(response.data) && response.data.length > 0) {
-          setSlangList(response.data);
+          setAllSlangList(response.data); // 전체 데이터를 저장
+
+          // 현재 선택된 카테고리에 해당하는 데이터 필터링
+          const filteredSlangs = categoryId
+            ? response.data.filter((item) => String(item.categoryId) === categoryId)
+            : response.data; // 전체일 때는 모든 데이터
+
+          setSlangList(filteredSlangs);
+          console.log("slangList:", filteredSlangs);
 
           // 카테고리별로 세션 스토리지 키 설정
           const sessionKey = "randomSlang_" + (categoryId || "all");
@@ -34,7 +42,7 @@ const WordPage = () => {
           if (storedSlang) {
             setRandomSlang(JSON.parse(storedSlang));
           } else {
-            const newRandomSlang = response.data[Math.floor(Math.random() * response.data.length)];
+            const newRandomSlang = filteredSlangs[Math.floor(Math.random() * filteredSlangs.length)];
             setRandomSlang(newRandomSlang);
             sessionStorage.setItem(sessionKey, JSON.stringify(newRandomSlang)); // 새 단어 저장
           }
@@ -103,12 +111,14 @@ const WordPage = () => {
           <div className="word-list-wrap">
             <div className="word-title">
               <h2 className="text-sb-6">
-                카테고리명
-                <span className="text-xr-8 text-blue">51</span>
+                {category ? category.categoryName : "전체"}
+                <span className="text-xr-8 text-blue">
+                  {category ? slangList.length : allSlangList.length}
+                </span>
               </h2>
               <Tooltip />
             </div>
-            <WordList />
+            <WordList slangList={slangList} />
           </div>
         </section>
       </main>
