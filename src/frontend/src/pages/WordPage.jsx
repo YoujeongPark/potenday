@@ -67,13 +67,8 @@ const WordPage = () => {
     fetchSlangs();
   }, [categoryId]);
 
-  // 오늘의 신조어 - 전체의 경우 카테고리를 랜덤에 맞추기 (아이콘 설정)
-  let randomSlangCategory = null;
-  if (!categoryId && randomSlang) {
-    randomSlangCategory = categories.find((cat) => String(cat.id) === String(randomSlang.categoryId));
-  } else {
-    randomSlangCategory = category;
-  }
+  // 전체의 경우 카테고리를 랜덤 단어에 맞추기 (아이콘 설정을 위함)
+  let randomSlangCategory = categoryId ? category : (randomSlang ? categories.find(cat => String(cat.id) === String(randomSlang.categoryId)) : null);
 
   return (
     <div id="wrap" className="word-page">
