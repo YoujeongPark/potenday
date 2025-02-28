@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import { CategoryProvider } from "./context/CategoryContext";
 import ScrollToTop from "./context/ScrollToTop";
+import IntroContainer from './component/IntroContainer';
 import Footer from './layout/Footer';
 import MainPage from './pages/MainPage';
 import WordPage from './pages/WordPage';
@@ -19,9 +20,9 @@ const routes = [
 
 const AppRoutes = () => {
   const location = useLocation();
-  const [transitionDirection, setTransitionDirection] = useState('next'); // prev / next 구분
-  const nodeRefs = useRef({}); // 각 페이지별 nodeRef
-  const [historyIndex, setHistoryIndex] = useState(window.history.state?.idx || 0); // 현재 history 인덱스
+  const [transitionDirection, setTransitionDirection] = useState('next');
+  const nodeRefs = useRef({});
+  const [historyIndex, setHistoryIndex] = useState(window.history.state?.idx || 0);
   const isSearchPage = location.pathname === "/search";
 
   useEffect(() => {
@@ -36,6 +37,7 @@ const AppRoutes = () => {
 
   return (
     <>
+      <IntroContainer />
       <TransitionGroup className={"page-wrapper " + transitionDirection}>
         {routes.map(({ path, Component }) =>
             location.pathname === path && (

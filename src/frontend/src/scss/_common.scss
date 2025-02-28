@@ -145,6 +145,20 @@
   &.btn-outline-white {
     border-width: 1px;
     border-color: #fff;
+    transition: all 0.2s;
+
+    * {
+      transition: all 0.2s;
+    }
+
+    &:hover {
+      background-color: #fff;
+      color: #00c4b8 !important;
+
+      .icon {
+        filter: invert(58%) sepia(20%) saturate(7478%) hue-rotate(139deg) brightness(100%) contrast(101%);
+      }
+    }
   }
 
   &.btn-back {
@@ -174,8 +188,27 @@
     font-size: 14px;
 
     span {
+      position: relative;
       color: #00c4b8;
       font-weight: 200;
+
+      &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 0;
+        height: 1px;
+        background-color: #00c4b8;
+        transition: width 0.3s;
+      }
+    }
+
+    &:hover {
+
+      span::after {
+        width: 100%;
+      }
     }
   }
 }
@@ -247,7 +280,7 @@
   &-box {
     position: absolute;
     right: 0;
-    top: 100%;
+    top: calc(100% + 4px);
     min-width: 220px;
     padding: 8px 0;
     border-radius: 8px;
@@ -401,6 +434,42 @@
   }
   to {
     transform: translateX(-100%);
+  }
+}
+
+@keyframes fadeUp {
+  0% {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes rippleEffect {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 0.8;
+  }
+  100% {
+    width: 150px;
+    height: 150px;
+    opacity: 0;
+  }
+}
+
+@keyframes waveGradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
   }
 }
 /* ===== End Animation ===== */

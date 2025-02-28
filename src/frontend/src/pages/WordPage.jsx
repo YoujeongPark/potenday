@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import React, { useRef, useState, useEffect, useLayoutEffect } from 'react';
 import { useSearchParams } from "react-router-dom";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useCategories } from "../context/CategoryContext";
 import axios from "axios";
 import HeaderSub from "../layout/HeaderSub";
@@ -70,11 +71,65 @@ const WordPage = () => {
   // 전체의 경우 카테고리를 랜덤 단어에 맞추기 (아이콘 설정을 위함)
   let randomSlangCategory = categoryId ? category : (randomSlang ? categories.find(cat => String(cat.id) === String(randomSlang.categoryId)) : null);
 
+  // 스크롤 애니메이션용
+  const containerRef = useRef(null);
+  const visualRef = useRef(null);
+  const [visualHeight, setVisualHeight] = useState(0);
+
+  // visual 높이 업데이트
+  const updateHeight = () => {
+    if (visualRef.current) {
+      setVisualHeight(visualRef.current.offsetHeight);
+    }
+  };
+
+  // visual 높이 설정 및 리사이즈
+  useEffect(() => {
+    const updateHeight = () => {
+      if (visualRef.current) {
+        setTimeout(() => {
+          setVisualHeight(visualRef.current.offsetHeight);
+        }, 0);
+      }
+    };
+
+    updateHeight();
+    window.addEventListener("resize", updateHeight);
+
+    // 요소 크기 변경 감지
+    const resizeObserver = new ResizeObserver(() => updateHeight());
+    if (visualRef.current) {
+      resizeObserver.observe(visualRef.current);
+    }
+
+    return () => {
+      window.removeEventListener("resize", updateHeight);
+      resizeObserver.disconnect();
+    };
+  }, [categoryId, searchParams]); // URL 변경 감지
+  
+  // contents-wrap가 visual 위로 가게
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"],
+  });
+  const yTransform = useTransform(scrollYProgress, [0, 1], [0, -visualHeight]);
+
   return (
-    <div id="wrap" className="word-page">
+    <div id="wrap" className="word-page" ref={containerRef}>
       <HeaderSub />
       <main id="main" role="main">
-        <section className="word-visual bg-gradient">
+        <motion.section
+          ref={visualRef}
+          className="word-visual bg-gradient"
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            zIndex: 10,
+          }}
+        >
           <div className="inner">
             <h2 className="text-s-4">
               {categoryId ? "오늘의 " + (category?.categoryName || "") + " 신조어!" : "오늘의 신조어!"}
@@ -113,8 +168,19 @@ const WordPage = () => {
               <p className="no-data">데이터가 없습니다.</p>
             )}
           </div>
-        </section>
-        <section className="contents-wrap">
+        </motion.section>
+
+        {/* 스크롤용 fake div */}
+        <div style={{ position: "relative", zIndex: 11, height: visualHeight }} />
+
+        <motion.section
+          className="contents-wrap"
+          style={{
+            y: yTransform,
+            position: "relative",
+            zIndex: 11,
+          }}
+        >
           <CategoryTab />
           <div className="word-list-wrap">
             <div className="word-title">
@@ -128,7 +194,7 @@ const WordPage = () => {
             </div>
             <WordList slangList={slangList} />
           </div>
-        </section>
+        </motion.section>
       </main>
     </div>
   );
