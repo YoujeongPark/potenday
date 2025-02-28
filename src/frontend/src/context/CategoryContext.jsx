@@ -20,7 +20,8 @@ export const CategoryProvider = ({ children }) => {
             return {
               ...item,
               description: mapCategoryData.description || "", // 추가설명
-              icon: mapCategoryData.icon || null, // 이미지
+              icon: mapCategoryData.icon || null, // 아이콘
+              tabIcon: mapCategoryData.tabIcon || null, // 탭아이콘
             };
           });
           console.log("매핑 데이터 : ", mappedCategories);

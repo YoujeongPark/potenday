@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useCategories } from '../context/CategoryContext';
+import {logo} from "../assets/images.js";
 
 const CategoryList = () => {
   const categories = useCategories();
@@ -20,7 +21,7 @@ const CategoryList = () => {
               )}
               {item.icon && (
                 <div className="icon icon-category">
-                   <img src={item.icon} alt="" />
+                  <object data={item.icon} type="image/svg+xml" />
                 </div>
               )}
             </Link>
