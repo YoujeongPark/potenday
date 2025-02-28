@@ -78,14 +78,12 @@
   display: flex;
   align-items: center;
   position: absolute;
-  left: 50%;
+  left: 0;
   top: 0;
   z-index: 1000;
   padding: 0 24px;
-  max-width: variables.$maxViewport;
   width: 100%;
   height: variables.$headerHeight;
-  transform: translateX(-50%);
 
   &.sub-header {
     justify-content: space-between;
@@ -100,13 +98,11 @@
 /* ==== Footer ===== */
 #footer {
   position: fixed;
-  left: 50%;
+  left: 0;
   bottom: 0;
   z-index: 1000;
-  max-width: variables.$maxViewport;
   width: 100%;
   height: variables.$footerHeight;
-  transform: translateX(-50%);
 
   &::after {
     content: "";
