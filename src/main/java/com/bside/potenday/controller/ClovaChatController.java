@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/chat")
+@RequestMapping("/api/clova")
 public class ClovaChatController {
 
     private final ClovaChatService clovaChatService;
@@ -18,10 +18,17 @@ public class ClovaChatController {
         this.clovaChatService = clovaChatService;
     }
 
-    @PostMapping("/send")
-    public String chat(@RequestBody Map<String, String> request) {
+    @PostMapping("/startChat")
+    public String startChat(@RequestBody Map<String, String> request) {
         String userMessage = request.get("message");
-        return clovaChatService.getChatResponse(userMessage);
+        return clovaChatService.getStartChatResponse(userMessage);
     }
+
+    @PostMapping("/startQuiz")
+    public String startQuiz(@RequestBody Map<String, String> request) {
+        String userMessage = request.get("message");
+        return clovaChatService.getStartQuizResponse(userMessage);
+    }
+
 }
 
