@@ -11,7 +11,7 @@ const MainPage = () => {
         <section className="main-visual bg-gradient">
           <div className="inner">
             <h2 className="text-sb-11 text-white">
-              <div className="character">
+              <div className="icon icon-character">
                 <img src={String(character)} alt="" />
               </div>
               요즘에는 이런말이?! <br />

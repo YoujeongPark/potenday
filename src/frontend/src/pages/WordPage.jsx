@@ -6,7 +6,7 @@ import HeaderSub from "../layout/HeaderSub";
 import CategoryTab from "../component/CategoryTab";
 import Tooltip from "../component/Tooltip";
 import WordList from "../component/WordList";
-import { logo, quotes } from '../assets/images.js';
+import { quotes } from '../assets/images.js';
 
 const WordPage = () => {
   const categories = useCategories();
@@ -41,7 +41,7 @@ const WordPage = () => {
 
           if (storedSlang) {
             const parsedSlang = JSON.parse(storedSlang);
-            
+
             // randomSlang이 현재 카테고리와 맞는지 확인
             if (!categoryId || String(parsedSlang.categoryId) === categoryId) {
               setRandomSlang(parsedSlang);

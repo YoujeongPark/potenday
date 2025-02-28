@@ -131,6 +131,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 0;
   outline: none !important;
   border: 1px solid transparent;
   background-color: transparent;
@@ -152,8 +153,6 @@
     height: 20px;
     background: url("../assets/icon/back.svg") no-repeat center;
     background-size: contain;
-    font-size: 0;
-    line-height: 0;
   }
 
   &.btn-search {
@@ -161,8 +160,13 @@
     height: 24px;
     background: url("../assets/icon/search.svg") no-repeat center;
     background-size: contain;
-    font-size: 0;
-    line-height: 0;
+  }
+
+  &.btn-clear {
+    width: 20px;
+    height: 20px;
+    background: url("../assets/icon/clear.svg") no-repeat center;
+    background-size: contain;
   }
 
   &.btn-text-sm {
@@ -189,6 +193,11 @@
 
   object {
     width: 100%;
+  }
+
+  &.icon-character {
+    width: 69px;
+    height: auto;
   }
 
   &.icon-category {
