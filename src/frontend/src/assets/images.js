@@ -18,7 +18,7 @@ export { default as category07 } from './icon/category07.svg';
 export { default as category08 } from './icon/category08.svg';
 export { default as category09 } from './icon/category09.svg';
 export { default as category10 } from './icon/category10.svg';
-export { default as categoryTabAll } from './icon/categorytab01.svg';
+export { default as categoryTabAll } from './icon/categorytab.svg';
 export { default as categoryTab01 } from './icon/categorytab01.svg';
 export { default as categoryTab02 } from './icon/categorytab02.svg';
 export { default as categoryTab03 } from './icon/categorytab03.svg';
