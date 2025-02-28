@@ -23,51 +23,29 @@
   font-weight: 300;
 }
 
-.search-category {
-
-  .btn {
-    flex-direction: column;
-    gap: 4px;
-    padding: 0;
-    border-color: #e5e5e5;
-    border-radius: 0;
-    width: 76px;
-    height: 56px;
-    font-size: 12px;
-  }
-}
-
-.select-category-list {
+.no-data-wrap {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 100px 24px;
 
-  li {
+  .text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+  }
 
-    a {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: relative;
-      font-size: 14px;
-      color: #212121;
-      font-weight: 300;
+  strong {
+    color: #333;
+  }
 
-      .icon {
-        position: absolute;
-        right: 0;
-        top: 50%;
-        transform: translateY(-50%);
-      }
-    }
-
-    &.active {
-
-      a {
-        color: #2aa971;
-        font-weight: 500;
-      }
-    }
+  p {
+    color: #666;
   }
 }
 /* ===== End Common style ===== */
@@ -90,8 +68,39 @@
     justify-content: space-between;
     gap: 12px;
     padding: 16px 24px;
+    border-bottom: 1px solid #e5e5e5;
     background-color: #fff;
-    box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.08);
+
+    &.shadow {
+      border-bottom: 0;
+      box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.08);
+    }
+  }
+}
+
+.search {
+  flex: 1 0 auto;
+  position: relative;
+  margin-right: 8px;
+
+  input {
+    width: 100%;
+    padding-right: 28px;
+    outline: none;
+    border: 0;
+    font-size: 16px;
+
+    &::placeholder {
+      opacity: 0.5;
+      color: #333;
+    }
+  }
+  
+  .btn-clear {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
   }
 }
 /* ==== End Header ===== */
@@ -180,10 +189,6 @@
       flex-direction: column;
       align-items: center;
       gap: 16px;
-
-      .character {
-        width: 69px;
-      }
     }
 
     .btn {
@@ -489,4 +494,23 @@
 /* ==== End Word page ===== */
 
 
+/* ==== Search page ===== */
+.search-page {
+  padding-top: variables.$headerHeight;
+
+  .search-result {
+    padding: 0 24px;
+
+    .word-list {
+
+      .card {
+
+        &:first-child {
+          border-top: 0;
+        }
+      }
+    }
+  }
+}
+/* ==== End Search page ===== */
 

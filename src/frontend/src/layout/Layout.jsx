@@ -1,13 +1,16 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Footer from "./Footer";
 
 const Layout = () => {
+  const location = useLocation();
+  const isSearchPage = location.pathname === "/search";
+
   return (
     <>
       <div className="page-transition">
         <Outlet />
       </div>
-      <Footer />
+      {!isSearchPage && <Footer />}
     </>
   );
 };

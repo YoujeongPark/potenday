@@ -1,5 +1,6 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useCategories } from "../context/CategoryContext";
+import Search from "../component/Search";
 
 const HeaderSub = () => {
   const navigate = useNavigate();
@@ -12,14 +13,15 @@ const HeaderSub = () => {
 
   // 현재 경로가 '/word'일 때만 카테고리명을 표시
   const isWordPage = location.pathname === "/word";
+  const isSearchPage = location.pathname === "/search";
 
   // 뒤로가기 버튼 클릭 시
   const handleBack = () => {
-    navigate(-1); //뒤로가기
+    navigate(-1);
   };
 
   return (
-    <header id="header" className="sub-header">
+    <header id="header" className={"sub-header" + (!isSearchPage ? " shadow" : "")}>
       <button className="btn btn-back" onClick={handleBack}>
         <span className="hide">뒤로가기</span>
       </button>
@@ -29,7 +31,7 @@ const HeaderSub = () => {
           {category ? category.categoryName : "전체보기"}
         </h1>
       ) : (
-        <div className="search-bar2">검색창</div>
+        <Search />
       )}
 
       <Link to="/search" className="btn btn-search">
