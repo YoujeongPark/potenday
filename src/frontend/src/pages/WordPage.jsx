@@ -107,7 +107,7 @@ const WordPage = () => {
       resizeObserver.disconnect();
     };
   }, [categoryId, searchParams]); // URL 변경 감지
-  
+
   // contents-wrap가 visual 위로 가게
   const { scrollYProgress } = useScroll({
     target: containerRef,

@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { useCategories } from '../context/CategoryContext';
-import {logo} from "../assets/images.js";
 
 const CategoryList = () => {
   const categories = useCategories();
