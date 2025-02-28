@@ -15,7 +15,7 @@ const Footer = () => {
         <Link to="/quiz" className="btn">
           AI<br />퀴즈봇
         </Link>
-        <Link to="/search">
+        <Link to="/word">
           <div className="icon">
             <object data={String(book)} type="image/svg+xml" />
           </div>

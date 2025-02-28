@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import Header from '../layout/Header';
-import SearchBar from '../component/SearchBar';
 import CategoryList from '../component/CategoryList';
 import { arrow, character, game } from '../assets/images.js';
 
@@ -14,7 +13,6 @@ const MainPage = () => {
             <h2 className="text-sb-11 text-white">
               <div className="character">
                 <img src={String(character)} alt="" />
-                {/*<object data={String(character)} type="image/svg+xml" className="character" />*/}
               </div>
               요즘에는 이런말이?! <br />
               요즘 신조어 나는 얼마나 알고있을까?
@@ -32,14 +30,17 @@ const MainPage = () => {
             <h2 className="text-sb-11">
               알고싶은 신조어를 검색하세요!
             </h2>
-            <SearchBar />
+            <Link to="/search" className="search-bar">
+              <span>검색어를 입력하세요.</span>
+              <div className="icon icon-search">검색</div>
+            </Link>
           </section>
           <section className="main-category">
             <div className="d-flex justify-space-between align-items-center">
               <h2 className="text-sb-11">
                 신조어 카테고리
               </h2>
-              <Link to="/search" className="btn btn-text-sm">
+              <Link to="/word" className="btn btn-text-sm">
                 <span>전체보기</span>
                 <object data={String(arrow)} type="image/svg+xml" />
               </Link>

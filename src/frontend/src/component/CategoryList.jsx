@@ -1,28 +1,18 @@
-import { Link } from "react-router-dom";
-import { useCategories } from "../context/CategoryContext.jsx";
+import { Link } from 'react-router-dom';
 
 const CategoryList = () => {
-  const categories = useCategories();
-
   return (
     <div className="category-list">
-      {categories.length > 0 ? (
-        categories.map((item) => (
-          <article key={item.id} className="card">
-            <Link to={'/search?category=' + item.id}>
-              <h3 className="text-xb-4">{item.categoryName}</h3>
-              <p className="text-xr-6">{item.description}</p>
-              {item.icon && (
-                <div className="icon">
-                  <img src={item.icon} alt={item.categoryName} />
-                </div>
-              )}
-            </Link>
-          </article>
-        ))
-      ) : (
-        <p>카테고리가 없습니다.</p>
-      )}
+      <article className="card">
+        <Link to="/word">
+          <h3 className="text-xb-4">카테고리명</h3>
+          <p className="text-xr-6">카테고리 설명</p>
+          <div className="icon">
+            아이콘
+            {/*<img src={item.icon} alt={item.categoryName} />*/}
+          </div>
+        </Link>
+      </article>
     </div>
   );
 };

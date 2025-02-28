@@ -1,4 +1,4 @@
-const CategoryList = () => {
+const WordList = () => {
   return (
     <div className="word-list">
       <article className="card">
@@ -69,4 +69,4 @@ const CategoryList = () => {
   );
 };
 
-export default CategoryList
+export default WordList
