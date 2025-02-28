@@ -19,7 +19,7 @@ const CategoryList = () => {
                 </p>
               )}
               {item.icon && (
-                <div className="icon">
+                <div className="icon icon-category">
                    <img src={item.icon} alt="" />
                 </div>
               )}
