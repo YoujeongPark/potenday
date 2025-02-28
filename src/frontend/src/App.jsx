@@ -24,6 +24,7 @@ const AppRoutes = () => {
   const nodeRefs = useRef({});
   const [historyIndex, setHistoryIndex] = useState(window.history.state?.idx || 0);
   const isSearchPage = location.pathname === "/search";
+  const isQuizPage = location.pathname === "/quiz";
 
   useEffect(() => {
     const newIndex = window.history.state?.idx || 0;
@@ -54,7 +55,7 @@ const AppRoutes = () => {
             )
         )}
       </TransitionGroup>
-      {!isSearchPage && <Footer />}
+      {!isSearchPage && !isQuizPage && <Footer />}
     </>
   );
 };

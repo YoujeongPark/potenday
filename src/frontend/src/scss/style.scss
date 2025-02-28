@@ -100,6 +100,10 @@
       border-bottom: 0;
       box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.08);
     }
+
+    &.none {
+      border-bottom: 0;
+    }
   }
 }
 
@@ -118,6 +122,7 @@
     &::placeholder {
       opacity: 0.5;
       color: #333;
+      font-weight: 300;
     }
   }
   
@@ -594,3 +599,43 @@
 }
 /* ==== End Search page ===== */
 
+
+/* ==== Quiz page ===== */
+.quiz-page {
+  padding-top: variables.$headerHeight;
+
+  .quiz-chat-wrap {
+
+  }
+
+  .chat-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: variables.$chatBarHeight;
+    padding: 12px 16px;
+    box-shadow: 0 -4px 20px 0 rgba(0, 0, 0, 0.04);
+
+    input {
+      width: calc(100% - 60px);
+      height: 24px;
+      padding: 6px 16px;
+      outline: none;
+      border: 0;
+      border-radius: 30px;
+      background-color: #fafafa;
+      font-size: 16px;
+
+      &::placeholder {
+        opacity: 0.5;
+        color: #333;
+        font-weight: 300;
+      }
+    }
+  }
+}
+/* ==== End Quiz page ===== */

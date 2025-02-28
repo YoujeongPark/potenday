@@ -11,9 +11,9 @@ const HeaderSub = () => {
   const categories = useCategories();
   const category = categories.find((item) => String(item.id) === categoryId);
 
-  // 현재 경로가 '/word'일 때만 카테고리명을 표시
   const isWordPage = location.pathname === "/word";
   const isSearchPage = location.pathname === "/search";
+  const isQuizPage = location.pathname === "/quiz";
 
   // 뒤로가기 버튼 클릭 시
   const handleBack = () => {
@@ -21,22 +21,36 @@ const HeaderSub = () => {
   };
 
   return (
-    <header id="header" className={"sub-header" + (!isSearchPage ? " shadow" : "")}>
-      <button className="btn btn-back" onClick={handleBack}>
-        <span className="hide">뒤로가기</span>
-      </button>
+    <header id="header" className={isSearchPage ? "sub-header" : isQuizPage ? "sub-header none" : "sub-header shadow"}>
+      {!isQuizPage && (
+        <button className="btn btn-back" onClick={handleBack}>
+          <span className="hide">뒤로가기</span>
+        </button>
+      )}
 
-      {isWordPage ? (
+      {isSearchPage ? (
+        <Search />
+      ) : isQuizPage ? (
+        <>
+          <span></span>
+          <h1 className="text-xb-4">
+            AI 퀴즈봇
+          </h1>
+          <button className="btn btn-close" onClick={handleBack}>
+            <span className="hide">페이지 닫기</span>
+          </button>
+        </>
+      ) : (
         <h1 className="text-xb-4">
           {category ? category.categoryName : "전체보기"}
         </h1>
-      ) : (
-        <Search />
       )}
 
-      <Link to="/search" className="btn btn-search">
-        <span className="hide">전체검색</span>
-      </Link>
+      {!isQuizPage && (
+        <Link to="/search" className="btn btn-search">
+          <span className="hide">전체검색</span>
+        </Link>
+      )}
     </header>
   );
 };
