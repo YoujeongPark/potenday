@@ -45,7 +45,7 @@ const CategoryTab = () => {
                 <div className="icon">
                   <object data={String(categoryTabAll)} type="image/svg+xml" />
                 </div>
-                <span className="text-xb-10">전체</span>
+                <span className="text-r-10">전체</span>
               </Link>
             </li>
             {categories.map((item) => (
@@ -60,7 +60,7 @@ const CategoryTab = () => {
                       <object data={item.tabIcon} type="image/svg+xml" />
                     </div>
                   )}
-                  <span className="text-xb-10">{item.categoryName}</span>
+                  <span className="text-r-10">{item.categoryName}</span>
                 </Link>
               </li>
             ))}

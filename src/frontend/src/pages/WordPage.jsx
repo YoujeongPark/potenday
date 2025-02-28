@@ -33,18 +33,31 @@ const WordPage = () => {
             : response.data; // 전체일 때는 모든 데이터
 
           setSlangList(filteredSlangs);
-          console.log("slangList:", filteredSlangs);
+          //console.log("slangList:", filteredSlangs);
 
           // 카테고리별로 세션 스토리지 키 설정
           const sessionKey = "randomSlang_" + (categoryId || "all");
           const storedSlang = sessionStorage.getItem(sessionKey);
 
           if (storedSlang) {
-            setRandomSlang(JSON.parse(storedSlang));
-          } else {
+            const parsedSlang = JSON.parse(storedSlang);
+            
+            // randomSlang이 현재 카테고리와 맞는지 확인
+            if (!categoryId || String(parsedSlang.categoryId) === categoryId) {
+              setRandomSlang(parsedSlang);
+              //console.log("randomSlang:", parsedSlang);
+              return;
+            }
+          }
+
+          // 현재 카테고리 내에서 랜덤 단어 선택
+          if (filteredSlangs.length > 0) {
             const newRandomSlang = filteredSlangs[Math.floor(Math.random() * filteredSlangs.length)];
             setRandomSlang(newRandomSlang);
+            //console.log("new randomSlang:", newRandomSlang);
             sessionStorage.setItem(sessionKey, JSON.stringify(newRandomSlang)); // 새 단어 저장
+          } else {
+            setRandomSlang(null); // 해당 카테고리에 단어가 없을 경우
           }
         }
       } catch (error) {
