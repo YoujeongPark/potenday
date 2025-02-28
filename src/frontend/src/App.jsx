@@ -1,5 +1,6 @@
-import { BrowserRouter as Router, Routes, Route, useLocation, useNavigationType } from 'react-router-dom';
-import { AnimatePresence, motion } from "framer-motion";
+import React, { useRef, useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import { CategoryProvider } from "./context/CategoryContext";
 import ScrollToTop from "./context/ScrollToTop";
 import Footer from './layout/Footer';
@@ -9,65 +10,48 @@ import SearchPage from './pages/SearchPage';
 import QuizPage from './pages/QuizPage';
 import './scss/style.scss';
 
-const AnimatedRoutes = () => {
+const routes = [
+  { path: "/", Component: MainPage },
+  { path: "/search", Component: SearchPage },
+  { path: "/word", Component: WordPage },
+  { path: "/quiz", Component: QuizPage }
+];
+
+const AppRoutes = () => {
   const location = useLocation();
-  const navigationType = useNavigationType();
-  const isBackNavigation = navigationType === 'POP';
-  const isMainPage = location.pathname === "/";
+  const [transitionDirection, setTransitionDirection] = useState('next'); // prev / next 구분
+  const nodeRefs = useRef({}); // 각 페이지별 nodeRef
+  const [historyIndex, setHistoryIndex] = useState(window.history.state?.idx || 0); // 현재 history 인덱스
   const isSearchPage = location.pathname === "/search";
 
-  // 애니메이션 설정
-  const pageVariants = isMainPage
-    ? {
-      initial: { x: 0 },
-      animate: { x: 0 },
-      exit: { x: 0 }
-    } : {
-      initial: { x: isBackNavigation ? '-100%' : '100%', zIndex: 1 },
-      animate: { x: 0, zIndex: 1, transition: { duration: 0.3 } },
-      exit: { zIndex: 0, transition: { duration: 0 } },
-    };
+  useEffect(() => {
+    const newIndex = window.history.state?.idx || 0;
+    setTransitionDirection(newIndex > historyIndex ? 'next' : 'prev');
+    setHistoryIndex(newIndex);
+  }, [location.pathname]);
+
+  if (!nodeRefs.current[location.pathname]) {
+    nodeRefs.current[location.pathname] = React.createRef();
+  }
 
   return (
     <>
-      <div className="routes-wrapper">
-        <AnimatePresence initial={false}>
-          <Routes location={location}>
-            <Route
-              path="/"
-              element={
-                <motion.div key={location.pathname} initial="initial" animate="animate" exit="exit" variants={pageVariants} className="page-container">
-                  <MainPage />
-                </motion.div>
-              }
-            />
-            <Route
-              path="search"
-              element={
-                <motion.div key={location.pathname} initial="initial" animate="animate" exit="exit" variants={pageVariants} className="page-container">
-                  <SearchPage />
-                </motion.div>
-              }
-            />
-            <Route
-              path="word"
-              element={
-                <motion.div key={location.pathname} initial="initial" animate="animate" exit="exit" variants={pageVariants} className="page-container">
-                  <WordPage />
-                </motion.div>
-              }
-            />
-            <Route
-              path="quiz"
-              element={
-                <motion.div key={location.pathname} initial="initial" animate="animate" exit="exit" variants={pageVariants} className="page-container">
-                  <QuizPage />
-                </motion.div>
-              }
-            />
-          </Routes>
-        </AnimatePresence>
-      </div>
+      <TransitionGroup className={"page-wrapper " + transitionDirection}>
+        {routes.map(({ path, Component }) =>
+            location.pathname === path && (
+              <CSSTransition
+                key={path}
+                nodeRef={nodeRefs.current[path]}
+                timeout={3000}
+                unmountOnExit
+              >
+                <div ref={nodeRefs.current[path]} className="page">
+                  <Component />
+                </div>
+              </CSSTransition>
+            )
+        )}
+      </TransitionGroup>
       {!isSearchPage && <Footer />}
     </>
   );
@@ -78,7 +62,7 @@ const App = () => {
     <CategoryProvider>
       <Router>
         <ScrollToTop />
-        <AnimatedRoutes />
+        <AppRoutes />
       </Router>
     </CategoryProvider>
   );
