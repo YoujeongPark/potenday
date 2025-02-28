@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { CategoryProvider } from "./context/CategoryContext";
+import ScrollToTop from "./context/ScrollToTop";
 import Layout from './layout/Layout';
 import MainPage from './pages/MainPage';
 import WordPage from './pages/WordPage';
@@ -11,6 +12,7 @@ const App = () => {
   return (
     <CategoryProvider>
       <Router>
+        <ScrollToTop />
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<MainPage />} />
