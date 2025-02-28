@@ -28,12 +28,18 @@ const WordList = ({ slangList, isSearchPage = false }) => {
                   />
                 </dd>
               )}
-              {slang.slangSubstitutes && (
-                <dd className="dd-item dd-change">
-                  <span className="badge bg-yellow">대치어</span>
-                  {slang.slangSubstitutes}
-                </dd>
-              )}
+              <dd className="dd-item dd-change">
+                <span className="badge bg-yellow">대체어</span>
+                {slang.slangSubstitutes ? (
+                  <>
+                    {slang.slangSubstitutes}
+                  </>
+                ) : (
+                  <>
+                    {slang.slangName}의 대체어가 없어요!
+                  </>
+                )}
+              </dd>
             </dl>
           </article>
         ))
