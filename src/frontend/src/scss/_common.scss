@@ -139,6 +139,15 @@
     border-color: #fff;
   }
 
+  &.btn-back {
+    width: 20px;
+    height: 20px;
+    background: url("../assets/icon/back.svg") no-repeat center;
+    background-size: contain;
+    font-size: 0;
+    line-height: 0;
+  }
+
   &.btn-search {
     width: 24px;
     height: 24px;

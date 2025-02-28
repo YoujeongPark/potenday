@@ -13,16 +13,16 @@ const CategoryList = () => {
               <h3 className="text-xb-4">
                 {item.categoryName}
               </h3>
-              {item.description &&
+              {item.description && (
                 <p className="text-xr-6">
                   {item.description}
                 </p>
-              }
-              {item.icon &&
+              )}
+              {item.icon && (
                 <div className="icon">
                    <img src={item.icon} alt="" />
                 </div>
-              }
+              )}
             </Link>
           </article>
         ))
