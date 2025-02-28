@@ -12,14 +12,6 @@
   padding-bottom: variables.$footerHeight;
 }
 
-.contents-wrap {
-  overflow: hidden;
-  position: relative;
-  z-index: 10;
-  border-radius: 24px 24px 0 0;
-  background-color: #fff;
-}
-
 .no-data {
   display: flex;
   justify-content: center;
@@ -208,7 +200,12 @@
   }
 
   .contents-wrap {
+    overflow: hidden;
+    position: relative;
+    z-index: 10;
     margin-top: -64px;
+    border-radius: 24px 24px 0 0;
+    background-color: #fff;
 
     section {
       display: flex;
@@ -347,36 +344,83 @@
   }
 
   .contents-wrap {
-    margin-top: -28px;
-    padding-top: 28px;
-  }
+    background-color: #fff;
 
-  .search-option-wrap {
-    display: flex;
-    justify-content: space-between;
-    gap: 4px;
-    padding: 20px;
-
-    .search-bar {
-      width: calc(100% - 80px);
-      .input-group {
-        height: 56px;
-      }
+    .word-list-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 24px 24px 40px;
     }
-  }
 
-  .search-result-wrap {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    padding: 0 24px 40px;
-
-    .d-flex {
+    .word-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
 
       h2 {
         display: flex;
         align-items: center;
         gap: 4px;
+      }
+    }
+  }
+}
+
+.category-tab {
+  overflow-x: scroll;
+  box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.08);
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  ul {
+    display: flex;
+    gap: 24px;
+
+    &::before {
+      content: "";
+      display: block;
+      width: 24px;
+      margin-right: -24px;
+      flex-shrink: 0;
+    }
+
+    &::after {
+      content: "";
+      display: block;
+      width: 24px;
+      margin-left: -24px;
+      flex-shrink: 0;
+    }
+
+    li {
+      white-space: nowrap;
+
+      a {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 4px;
+        height: 64px;
+      }
+
+      &.active {
+
+        a {
+
+          .icon {
+            filter: invert(55%) sepia(98%) saturate(1958%) hue-rotate(136deg) brightness(97%) contrast(101%);
+          }
+
+          span {
+            color: #00c4b8;
+          }
+        }
       }
     }
   }

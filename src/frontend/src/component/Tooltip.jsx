@@ -29,7 +29,7 @@ const Tooltip = () => {
 
   return (
     <div ref={tooltipRef} className="tooltip">
-      <div className="icon" onClick={toggleTooltip}>
+      <div className="icon icon-tooltip" onClick={toggleTooltip}>
         <object data={String(tooltip)} type="image/svg+xml" />
       </div>
       {isTooltipVisible && (

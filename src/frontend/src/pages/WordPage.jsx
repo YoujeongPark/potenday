@@ -98,10 +98,10 @@ const WordPage = () => {
             )}
           </div>
         </section>
-        <div className="pull-wrap">
+        <section className="contents-wrap">
           <CategoryTab />
-          <section className="word-list-wrap">
-            <div className="word-title-wrap">
+          <div className="word-list-wrap">
+            <div className="word-title">
               <h2 className="text-sb-6">
                 카테고리명
                 <span className="text-xr-8 text-blue">51</span>
@@ -109,8 +109,8 @@ const WordPage = () => {
               <Tooltip />
             </div>
             <WordList />
-          </section>
-        </div>
+          </div>
+        </section>
       </main>
     </div>
   );
