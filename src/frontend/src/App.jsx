@@ -45,7 +45,7 @@ const AppRoutes = () => {
               <CSSTransition
                 key={path}
                 nodeRef={nodeRefs.current[path]}
-                timeout={3000}
+                timeout={300}
                 unmountOnExit
               >
                 <div ref={nodeRefs.current[path]} className="page">

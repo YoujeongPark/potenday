@@ -371,9 +371,21 @@
     top: 0;
     z-index: 1;
     background-color: #fff;
+    transition: opacity 2s;
+
+    &.enter-active {
+      z-index: 5;
+      opacity: 1;
+    }
+
+    &.exit-active {
+      z-index: 5;
+      opacity: 0;
+      transition: none;
+    }
   }
 
-
+  /*
   &.next {
 
     .page {
@@ -405,6 +417,7 @@
       }
     }
   }
+  */
 }
 /* ===== End page transition group ===== */
 
@@ -462,7 +475,7 @@
   }
   100% {
     transform: translateY(0);
-    opacity: 0;
+    opacity: 1;
   }
 }
 

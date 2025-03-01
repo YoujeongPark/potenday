@@ -119,17 +119,7 @@ const WordPage = () => {
     <div id="wrap" className="word-page" ref={containerRef}>
       <HeaderSub />
       <main id="main" role="main">
-        <motion.section
-          ref={visualRef}
-          className="word-visual bg-gradient"
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100%",
-            zIndex: 10,
-          }}
-        >
+        <section className="word-visual bg-gradient">
           <div className="inner">
             <h2 className="text-s-4">
               {categoryId ? "오늘의 " + (category?.categoryName || "") + " 신조어!" : "오늘의 신조어!"}
@@ -137,22 +127,22 @@ const WordPage = () => {
             {randomSlang ? (
               <>
                 <dl>
-                  <dt className={categoryId ? "quotes" : "underline"}>
-                    {categoryId && (
+                  <dt className="underline">
+                    {/*categoryId && (
                       <>
                         <span className="icon icon-quotes icon-quotes-left">
                           <object data={String(quotes)} type="image/svg+xml" />
                         </span>
                       </>
-                    )}
+                    )*/}
                     <span className="text-sb-8">{randomSlang.slangName}</span>
-                    {categoryId && (
+                    {/* && (
                       <>
                         <span className="icon icon-quotes icon-quotes-right">
                           <object data={String(quotes)} type="image/svg+xml" />
                         </span>
                       </>
-                    )}
+                    )*/}
                   </dt>
                   <dd className="text-r-4">{randomSlang.slangMeaning}</dd>
                 </dl>
@@ -168,19 +158,9 @@ const WordPage = () => {
               <p className="no-data">데이터가 없습니다.</p>
             )}
           </div>
-        </motion.section>
+        </section>
 
-        {/* 스크롤용 fake div */}
-        <div style={{ position: "relative", zIndex: 11, height: visualHeight }} />
-
-        <motion.section
-          className="contents-wrap"
-          style={{
-            y: yTransform,
-            position: "relative",
-            zIndex: 11,
-          }}
-        >
+        <section className="contents-wrap">
           <CategoryTab />
           <div className="word-list-wrap">
             <div className="word-title">
@@ -194,7 +174,7 @@ const WordPage = () => {
             </div>
             <WordList slangList={slangList} />
           </div>
-        </motion.section>
+        </section>
       </main>
     </div>
   );

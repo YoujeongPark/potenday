@@ -1,4 +1,4 @@
-import { character } from '../assets/images.js';
+import { character, character2 } from '../assets/images.js';
 import { useSearchParams } from "react-router-dom";
 
 const WordList = ({ slangList, isSearchPage = false }) => {
@@ -47,7 +47,11 @@ const WordList = ({ slangList, isSearchPage = false }) => {
         isSearchPage ? (
           <div className="no-data-wrap">
             <div className="icon icon-character">
-              <img src={String(character)} alt="" />
+              {wordParam ?
+                <img src={String(character)} alt="" />
+                :
+                <img src={String(character2)} alt="" />
+              }
             </div>
             <div className="text">
               <strong className="text-xb-4">

@@ -1,6 +1,7 @@
 // 이미지 export
 export { default as logo } from './common/logo.svg';
 export { default as character } from './common/character.png';
+export { default as character2 } from './common/character2.png';
 export { default as book } from './icon/book.svg';
 export { default as game } from './icon/game.svg';
 export { default as home } from './icon/home.svg';

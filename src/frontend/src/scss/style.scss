@@ -79,6 +79,7 @@
 /* ==== Header ===== */
 #header {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   position: absolute;
   left: 0;
@@ -87,6 +88,12 @@
   padding: 0 24px;
   width: 100%;
   height: variables.$headerHeight;
+
+  &:not(.sub-header) {
+    .btn-search {
+      filter: invert(100%) sepia(0%) saturate(7456%) hue-rotate(354deg) brightness(104%) contrast(99%);
+    }
+  }
 
   &.sub-header {
     position: fixed;
@@ -298,6 +305,13 @@
       &:first-child {
         border-top: 0;
       }
+    }
+  }
+
+  .main-category {
+
+    h2 {
+      white-space: nowrap;
     }
   }
 }
