@@ -27,7 +27,6 @@
   position: relative;
   width: 100%;
   height: 100%;
-  min-height: 100vh;
   padding-bottom: variables.$footerHeight;
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -617,10 +616,7 @@
 /* ==== Quiz page ===== */
 .quiz-page {
   padding-top: variables.$headerHeight;
-
-  .quiz-chat-wrap {
-
-  }
+  padding-bottom: variables.$chatBarHeight !important;
 
   .chat-bar {
     display: flex;
@@ -632,6 +628,7 @@
     width: 100%;
     height: variables.$chatBarHeight;
     padding: 12px 16px;
+    background-color: #fff;
     box-shadow: 0 -4px 20px 0 rgba(0, 0, 0, 0.04);
 
     input {
@@ -648,6 +645,90 @@
         opacity: 0.5;
         color: #333;
         font-weight: 300;
+      }
+    }
+
+    &.disabled {
+
+      input {
+        background-color: #e5e5e5;
+      }
+    }
+  }
+
+  main {
+    overflow-y: auto;
+    height: 100%;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .chat-wrap {
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 100%;
+    padding: 12px 16px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+
+  .chat-item-wrap {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 12px;
+
+    .chat-item {
+      position: relative;
+      max-width: 270px;
+      padding: 8px 10px;
+      border: 1px solid rgba(160, 160, 160, 0.1);
+      border-radius: 16px 16px 16px 0.5px;
+      background-color: #fcfdfc;
+      box-shadow: inset 1px 1px 10px rgba(0, 0, 0, 0.08);
+      font-size: 14px;
+      font-family: 'Pretendard', sans-serif;
+      line-height: 21px;
+      letter-spacing: -0.02em;
+    }
+
+    &.assistant {
+
+      .chat-item {
+        width: 270px;
+        padding-right: 40px;
+
+        &:after {
+          content: "";
+          position: absolute;
+          right: 10px;
+          top: 8px;
+          width: 26px;
+          height: 21px;
+          background: url("../assets/icon/face.svg") no-repeat center;
+          background-size: contain;
+        }
+      }
+    }
+
+    &.user {
+      justify-content: flex-end;
+
+      .chat-item {
+        border-radius: 16px 16px 0.5px 16px;
+        background: linear-gradient(120deg, #00c4b8 50%, #3db4f7);
+        font-weight: 300;
+        color: #fff;
       }
     }
   }
