@@ -7,10 +7,7 @@
 
 /* ===== Common style ===== */
 #root {
-
-  &:has(#footer) {
-    padding-bottom: variables.$footerHeight;
-  }
+  padding-bottom: variables.$footerHeight;
 }
 
 #wrap {
