@@ -2,11 +2,14 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 const ScrollToTop = () => {
-  const location = useLocation();
+  const { pathname } = useLocation();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [location.pathname, location.key]); // 뒤로가기 감지
+    const rootElement = document.getElementById("root");
+    if (rootElement) {
+      rootElement.scrollTo({ top: 0 });
+    }
+  }, [pathname]);
 
   return null;
 };

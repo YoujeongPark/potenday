@@ -46,7 +46,7 @@ const AppRoutes = () => {
                 key={path}
                 nodeRef={nodeRefs.current[path]}
                 timeout={300}
-                unmountOnExit
+                unmountOnExit={false}
               >
                 <div ref={nodeRefs.current[path]} className="page">
                   <Component />
