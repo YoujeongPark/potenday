@@ -6,10 +6,18 @@
 
 
 /* ===== Common style ===== */
+#root {
+
+  &:has(#footer) {
+    padding-bottom: variables.$footerHeight;
+  }
+}
+
 #wrap {
   position: relative;
   width: 100%;
   height: 100%;
+  min-height: 100vh;
   padding-bottom: variables.$footerHeight;
 }
 
