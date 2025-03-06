@@ -721,19 +721,24 @@
 
   &:has(.quiz-page) {
 
-    .page-wrapper {
-      height: 100%;
+    #wrap {
+      position: fixed;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #fff;
     }
 
-    .page {
+    #main {
       height: 100%;
+      padding-top: variables.$headerHeight;
+      padding-bottom: variables.$chatBarHeight;
     }
   }
 }
 
 .quiz-page {
-  height: 100vh;
-  height: 100dvh;
 
   #header {
     background-color: rgba(255, 255, 255, 0.7);
@@ -744,7 +749,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    z-index: 1000;
     width: 100%;
+    min-height: auto;
     height: variables.$chatBarHeight;
     padding: 12px 16px;
     background-color: #fff;
@@ -775,18 +785,13 @@
     }
   }
 
-  #main {
-    height: calc(100vh - #{variables.$chatBarHeight});
-    height: calc(100dvh - #{variables.$chatBarHeight});
-  }
-
   .chat-wrap {
     overflow-y: auto;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     height: 100%;
-    padding: variables.$headerHeight 16px 12px;
+    padding: 12px 16px;
     -webkit-overflow-scrolling: touch;
     -ms-overflow-style: none;
     scrollbar-width: none;
