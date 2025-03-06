@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from 'react';
+import React, { useEffect, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { CategoryProvider } from "./context/CategoryContext";
 import { OverlayProvider, LoadingOverlay } from './context/OverlayProvider';
@@ -39,7 +39,36 @@ const AppRoutes = () => {
   );
 };
 
+function vhHeight() {
+  useEffect(() => {
+    let lastWidth = window.innerWidth;
+
+    setViewportHeight();
+
+    // resize
+    function handleResize() {
+      if (window.innerWidth !== lastWidth) {
+        lastWidth = window.innerWidth;
+        setViewportHeight();
+      }
+    }
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+}
+
+function setViewportHeight() {
+  const vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+}
+
 const App = () => {
+  vhHeight();
+
   return (
     <CategoryProvider>
       <Router>
