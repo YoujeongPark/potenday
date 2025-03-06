@@ -164,7 +164,8 @@
 
       .icon {
         filter: invert(58%) sepia(20%) saturate(7478%) hue-rotate(139deg) brightness(100%) contrast(101%);
-        will-change: filter;
+        backface-visibility: hidden;
+        mix-blend-mode: normal;
       }
     }
   }

@@ -61,7 +61,8 @@
   &:not(.sub-header) {
     .btn-search {
       filter: invert(100%) sepia(0%) saturate(7456%) hue-rotate(354deg) brightness(104%) contrast(99%);
-      will-change: filter;
+      backface-visibility: hidden;
+      mix-blend-mode: normal;
     }
   }
 
@@ -137,7 +138,8 @@
     height: 2px;
     background: rgba(0,0,0,0.2);
     filter: blur(6px);
-    will-change: filter;
+    backface-visibility: hidden;
+    mix-blend-mode: normal;
   }
 
   nav {
@@ -254,7 +256,8 @@
 
       object {
         filter: invert(55%) sepia(98%) saturate(1958%) hue-rotate(136deg) brightness(97%) contrast(101%);
-        will-change: filter;
+        backface-visibility: hidden;
+        mix-blend-mode: normal;
       }
     }
 
@@ -585,7 +588,8 @@
 
           .icon {
             filter: invert(55%) sepia(98%) saturate(1958%) hue-rotate(136deg) brightness(97%) contrast(101%);
-            will-change: filter;
+            backface-visibility: hidden;
+            mix-blend-mode: normal;
           }
 
           span {
