@@ -89,4 +89,11 @@ html, body {
   &::-webkit-scrollbar {
     display: none;
   }
+
+  &:has(#footer) {
+
+    #main {
+      padding-bottom: 68px;
+    }
+  }
 }

@@ -373,10 +373,6 @@
       &:first-child {
         border-top: 0;
       }
-
-      &:last-child {
-          padding-bottom: calc(#{variables.$footerHeight} + 40px);
-      }
     }
   }
 
@@ -523,7 +519,7 @@
       display: flex;
       flex-direction: column;
       gap: 16px;
-      padding: 24px 24px calc(#{variables.$footerHeight} + 40px);
+      padding: 24px 24px 40px;
     }
 
     .word-title {
