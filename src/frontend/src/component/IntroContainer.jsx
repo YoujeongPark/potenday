@@ -2,10 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { logo } from '../assets/images.js';
 
 const IntroContainer = () => {
-  const [visible, setVisible] = useState(() => {
+
+  const [introVisible, setIntroVisible] = useState(() => {
     const alreadyShown = sessionStorage.getItem('introShown');
     if (!alreadyShown) {
-      sessionStorage.setItem('introShown', 'true');
+      setTimeout(() => {
+        sessionStorage.setItem('introShown', 'true');
+      }, 3000);
       return true;
     }
     return false;
@@ -14,13 +17,13 @@ const IntroContainer = () => {
   const [fadeOut, setFadeOut] = useState(false);
 
   useEffect(() => {
-    if (visible) {
+    if (introVisible) {
       const timer1 = setTimeout(() => {
         setFadeOut(true);
       }, 3000);
 
       const timer2 = setTimeout(() => {
-        setVisible(false); // 페이드아웃 후 컴포넌트 제거
+        setIntroVisible(false); // 페이드아웃 후 컴포넌트 제거
       }, 4000);
 
       return () => {
@@ -28,10 +31,10 @@ const IntroContainer = () => {
         clearTimeout(timer2);
       };
     }
-  }, [visible]);
+  }, [introVisible]);
 
   return (
-    visible && (
+    introVisible && (
       <div className={`intro-container ${fadeOut ? 'hidden' : ''}`}>
         <h1>
           <object data={String(logo)} type="image/svg+xml" aria-label="It Dictionary" />

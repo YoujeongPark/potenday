@@ -732,7 +732,8 @@
 }
 
 .quiz-page {
-  height: calc(var(--vh, 1vh) * 100);
+  height: 100vh;
+  height: 100dvh;
 
   #header {
     background-color: rgba(255, 255, 255, 0.7);
@@ -775,7 +776,8 @@
   }
 
   #main {
-    height: calc((var(--vh, 1vh) * 100) - #{variables.$chatBarHeight});
+    height: calc(100vh - #{variables.$chatBarHeight});
+    height: calc(100dvh - #{variables.$chatBarHeight});
   }
 
   .chat-wrap {
