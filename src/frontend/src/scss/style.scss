@@ -16,7 +16,7 @@
   bottom: 0;
   right: 0;
   z-index: 9999;
-  background-color: rgba(0, 0, 0 ,0.2);
+  background-color: rgba(0, 0, 0 ,0.38);
   font-size: 0;
   line-height: 0;
   text-indent: -9999px;
@@ -733,9 +733,10 @@
 
 .quiz-page {
   height: 100vh;
-  
+
   #header {
-    position: static;
+    background-color: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(4px);
   }
 
   .chat-bar {
@@ -774,7 +775,7 @@
   }
 
   #main {
-    height: calc(100vh - #{variables.$headerHeight} - #{variables.$chatBarHeight});
+    height: calc(100vh - #{variables.$chatBarHeight});
   }
 
   .chat-wrap {
@@ -783,7 +784,7 @@
     flex-direction: column;
     justify-content: flex-end;
     height: 100%;
-    padding: 12px 16px;
+    padding: variables.$headerHeight 16px 12px;
     -webkit-overflow-scrolling: touch;
     -ms-overflow-style: none;
     scrollbar-width: none;
