@@ -1,13 +1,12 @@
-import React, { useRef, useState, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSearchParams } from "react-router-dom";
-import { motion, useScroll, useTransform } from "framer-motion";
 import { useCategories } from "../context/CategoryContext";
 import axios from "axios";
 import HeaderSub from "../layout/HeaderSub";
 import CategoryTab from "../component/CategoryTab";
 import Tooltip from "../component/Tooltip";
 import WordList from "../component/WordList";
-import { quotes } from '../assets/images.js';
+import ChatShortCut from '../component/ChatShortCut';
 
 const WordPage = () => {
   const categories = useCategories();
@@ -71,52 +70,8 @@ const WordPage = () => {
   // 전체의 경우 카테고리를 랜덤 단어에 맞추기 (아이콘 설정을 위함)
   let randomSlangCategory = categoryId ? category : (randomSlang ? categories.find(cat => String(cat.id) === String(randomSlang.categoryId)) : null);
 
-  // 스크롤 애니메이션용
-  const containerRef = useRef(null);
-  const visualRef = useRef(null);
-  const [visualHeight, setVisualHeight] = useState(0);
-
-  // visual 높이 업데이트
-  const updateHeight = () => {
-    if (visualRef.current) {
-      setVisualHeight(visualRef.current.offsetHeight);
-    }
-  };
-
-  // visual 높이 설정 및 리사이즈
-  useEffect(() => {
-    const updateHeight = () => {
-      if (visualRef.current) {
-        setTimeout(() => {
-          setVisualHeight(visualRef.current.offsetHeight);
-        }, 0);
-      }
-    };
-
-    updateHeight();
-    window.addEventListener("resize", updateHeight);
-
-    // 요소 크기 변경 감지
-    const resizeObserver = new ResizeObserver(() => updateHeight());
-    if (visualRef.current) {
-      resizeObserver.observe(visualRef.current);
-    }
-
-    return () => {
-      window.removeEventListener("resize", updateHeight);
-      resizeObserver.disconnect();
-    };
-  }, [categoryId, searchParams]); // URL 변경 감지
-
-  // contents-wrap가 visual 위로 가게
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"],
-  });
-  const yTransform = useTransform(scrollYProgress, [0, 1], [0, -visualHeight]);
-
   return (
-    <div id="wrap" className="word-page" ref={containerRef}>
+    <div id="wrap" className="word-page">
       <HeaderSub />
       <main id="main" role="main">
         <section className="word-visual bg-gradient">
@@ -128,21 +83,7 @@ const WordPage = () => {
               <>
                 <dl>
                   <dt className="underline">
-                    {/*categoryId && (
-                      <>
-                        <span className="icon icon-quotes icon-quotes-left">
-                          <object data={String(quotes)} type="image/svg+xml" />
-                        </span>
-                      </>
-                    )*/}
                     <span className="text-sb-8">{randomSlang.slangName}</span>
-                    {/* && (
-                      <>
-                        <span className="icon icon-quotes icon-quotes-right">
-                          <object data={String(quotes)} type="image/svg+xml" />
-                        </span>
-                      </>
-                    )*/}
                   </dt>
                   <dd className="text-r-4">{randomSlang.slangMeaning}</dd>
                 </dl>
@@ -175,6 +116,7 @@ const WordPage = () => {
             <WordList slangList={slangList} />
           </div>
         </section>
+        <ChatShortCut />
       </main>
     </div>
   );

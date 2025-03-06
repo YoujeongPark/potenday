@@ -188,6 +188,97 @@
 /* ==== End Footer ===== */
 
 
+/* ==== ChatShortCut ===== */
+.chat-shortcut {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  right: 16px;
+  bottom: calc(#{variables.$footerHeight} + 16px);
+  z-index: 100;
+  max-width: 342px;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: transparent;
+
+  .icon-chat {
+    position: relative;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.08), 0 4px 8px 0 rgba(0, 0, 0, 0.08), 0 6px 12px 0 rgba(0, 0, 0, 0.12);
+  }
+
+  .text {
+    flex: 1;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    width: 0;
+    height: 0;
+  }
+
+  .icon-arrow {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    z-index: 1;
+    transform: translateY(-50%);
+  }
+
+  &.open {
+    width: 90%;
+    height: 72px;
+    padding: 12px 20px;
+    background: linear-gradient(136deg, #00c4b8 30.31%, #63eab1 104.04%);
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.08), 0 4px 8px 0 rgba(0, 0, 0, 0.08), 0 6px 12px 0 rgba(0, 0, 0, 0.12);
+    transition: width 0.3s, height 0.3s;
+
+    * {
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+  }
+
+  &.able {
+
+    .icon-chat {
+      box-shadow: none;
+
+      &::after {
+        content: "";
+        position: absolute;
+        left: -4px;
+        top: -4px;
+        bottom: -4px;
+        right: -4px;
+        z-index: -1;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.2);
+      }
+
+      object {
+        filter: invert(55%) sepia(98%) saturate(1958%) hue-rotate(136deg) brightness(97%) contrast(101%);
+      }
+    }
+
+    .text {
+      opacity: 1;
+      visibility: visible;
+      width: auto;
+      height: auto;
+      padding: 0 32px 0 12px;
+    }
+
+    .icon-arrow {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
+/* ==== End ChatShortCut ===== */
+
+
 /* ==== Intro page ===== */
 .intro-container {
   opacity: 1;

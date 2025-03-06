@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../layout/Header';
 import CategoryList from '../component/CategoryList';
+import ChatShortCut from '../component/ChatShortCut';
 import { arrow, character, game } from '../assets/images.js';
 
 const MainPage = () => {
@@ -51,6 +51,7 @@ const MainPage = () => {
             <CategoryList />
           </section>
         </div>
+        <ChatShortCut />
       </main>
     </div>
   );

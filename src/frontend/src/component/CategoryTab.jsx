@@ -1,7 +1,7 @@
+import { useLayoutEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useCategories } from "../context/CategoryContext";
 import { categoryTabAll } from "../assets/images.js";
-import { useLayoutEffect, useRef } from "react";
 
 const CategoryTab = () => {
   const categories = useCategories();
