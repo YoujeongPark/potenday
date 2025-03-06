@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { CategoryProvider } from "./context/CategoryContext";
+import { OverlayProvider, LoadingOverlay } from './context/OverlayProvider';
 import ScrollToTop from "./context/ScrollToTop";
 import IntroContainer from './component/IntroContainer';
 import Footer from './layout/Footer';
-import MainPage from './pages/MainPage';
-import WordPage from './pages/WordPage';
-import SearchPage from './pages/SearchPage';
-import QuizPage from './pages/QuizPage';
 import './scss/style.scss';
+
+const MainPage = lazy(() => import('./pages/MainPage'));
+const SearchPage = lazy(() => import('./pages/SearchPage'));
+const WordPage = lazy(() => import('./pages/WordPage'));
+const QuizPage = lazy(() => import('./pages/QuizPage'));
 
 const routes = [
   { path: "/", Component: MainPage },
@@ -41,8 +43,11 @@ const App = () => {
   return (
     <CategoryProvider>
       <Router>
-        <ScrollToTop />
-        <AppRoutes />
+        <OverlayProvider>
+          <ScrollToTop />
+          <LoadingOverlay />
+          <AppRoutes />
+        </OverlayProvider>
       </Router>
     </CategoryProvider>
   );

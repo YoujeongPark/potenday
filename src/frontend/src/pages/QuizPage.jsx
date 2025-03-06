@@ -126,12 +126,12 @@ const QuizPage = () => {
             </motion.div>
           ))}
         </div>
-        <ChatBar
-          onSendMessage={fetchMessage}
-          isDisabled={isWaitingForAI || isQuizStarted}
-          isQuizMode={isQuizStarted}
-        />
       </main>
+      <ChatBar
+        onSendMessage={fetchMessage}
+        isDisabled={isWaitingForAI || isQuizStarted}
+        isQuizMode={isQuizStarted}
+      />
     </div>
   );
 };

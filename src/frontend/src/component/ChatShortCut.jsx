@@ -23,29 +23,41 @@ const ChatShortCut = () => {
   }, []);
 
   // 클릭 시 open / able 처리
-  const handleClick = (e) => {
+  const handleClick = () => {
     if (!isOpen) {
-      e.preventDefault();
       setIsOpen(true);
-      // able 상태로 전환
       setTimeout(() => {
         setIsReadyToClick(true);
       }, 100);
-    } else { // open된 상태인 경우
-      if (!isReadyToClick) { // able 전환 전이면 막기
-        e.preventDefault();
-      } else {
-        navigate("/quiz");
-      }
+      return;
     }
+
+    if (!isReadyToClick) {
+      return;
+    }
+
+    // open + able 상태라면 이동
+    navigate("/quiz");
   };
 
   return (
     <Link
       to="/quiz"
       ref={linkRef}
-      onClick={handleClick}
-      className={"chat-shortcut" + (isOpen ? " open" : "") + (isReadyToClick ? " able" : "")}
+      onClick={(e) => {
+        if (!isOpen) {
+          e.preventDefault();
+          setIsOpen(true);
+          setTimeout(() => setIsReadyToClick(true), 100);
+        } else if (!isReadyToClick) {
+          e.preventDefault();
+        }
+      }}
+      className={
+        "chat-shortcut" +
+        (isOpen ? " open" : "") +
+        (isReadyToClick ? " able" : "")
+      }
     >
       <div className="icon icon-chat">
         <object data={String(chat)} type="image/svg+xml" />
