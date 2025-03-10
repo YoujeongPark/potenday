@@ -30,5 +30,10 @@ public class ClovaChatController {
         return clovaChatService.getStartQuizResponse(userMessage);
     }
 
+    @PostMapping("/addQuiz")
+    public String addQuiz(@RequestBody Map<String, String> request) {
+        String userMessage = request.get("message");
+        return clovaChatService.getAddQuizResponse(userMessage);
+    }
 }
 
