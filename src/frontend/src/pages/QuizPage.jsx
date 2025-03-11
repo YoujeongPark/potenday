@@ -5,12 +5,23 @@ import ChatBar from "../component/ChatBar";
 import axios from "axios";
 
 const QuizPage = () => {
-  const [messages, setMessages] = useState([]);
-  const [isWaitingForAI, setIsWaitingForAI] = useState(false); // AI 응답 대기 상태
-  const [nicknameConfirmed, setNicknameConfirmed] = useState(false); // 닉네임 체크
-  const [isQuizMode, setIsQuizMode] = useState(false); // 퀴즈 모드 상태
-  const [quizRound, setQuizRound] = useState(0); // 현재 퀴즈 라운드 (시작 전 0)
-  const initialFetched = useRef(false); // startChat 중복 호출 방지
+  const [messages, setMessages] = useState([]); // 메세지
+  const [isWaitingForAI, setIsWaitingForAI] = useState(false); // ai 응답 대기
+  const [nickname, setNickname] = useState("");
+  const [nicknameConfirmed, setNicknameConfirmed] = useState(false); // 닉네임 통과 상태
+  const [isQuizMode, setIsQuizMode] = useState(false); // 퀴즈모드 진입
+  const [quizRound, setQuizRound] = useState(0); // 퀴즈 라운드 설정
+  const [correctAnswers, setCorrectAnswers] = useState([]); // 정답 리스트
+  const [correctCount, setCorrectCount] = useState(0); // 정답 갯수 카운트
+  const [hasAnswered, setHasAnswered] = useState(false); // 현재 문제에 답변 완료 여부
+  const initialFetched = useRef(false);
+  const chatWrapRef = useRef(null);
+
+  useEffect(() => {
+    if (chatWrapRef.current) {
+      chatWrapRef.current.scrollTop = chatWrapRef.current.scrollHeight;
+    }
+  }, [messages]);
 
   // 메시지 내 개행 처리
   const formatMessage = (content) => {
@@ -22,31 +33,78 @@ const QuizPage = () => {
     ));
   };
 
-  // 메시지 추가 (role: "assistant" / "user")
-  const addMessage = (role, content) => {
-    setMessages((prev) => [...prev, { role, content: formatMessage(content) }]);
+  // 메시지 추가 함수
+  const addMessage = (role, content, extra = {}) => {
+    let additionalClass = extra.className || "";
+
+    if (content.includes("신조어 점수는")) {
+      additionalClass = "state-score";
+    }
+
+    setMessages((prev) => [
+      ...prev,
+      { role, content: formatMessage(content), raw: content, className: additionalClass, ...extra }
+    ]);
   };
 
-  // 로드시 startChat API 호출
+  // 퀴즈 메시지에서 문제와 선택지 분리
+  const parseQuizMessage = (content) => {
+    let correctAnswer = null;
+    let textWithoutAnswer = content;
+
+    if (content.includes("정답 :")) {
+      const answerSplit = content.split("정답 :");
+      correctAnswer = answerSplit[1].trim();
+      textWithoutAnswer = answerSplit[0].trim();
+    }
+
+    const parts = textWithoutAnswer.split("선택지 :");
+    if (parts.length < 2) {
+      return {question: textWithoutAnswer, options: [], correctAnswer};
+    }
+
+    const question = parts[0].replace(/문제\s*\d+\s*:/, "").trim();
+    const options = parts[1].split(",").map((opt) => opt.trim());
+    return { question, options, correctAnswer };
+  };
+
+  // 퀴즈 메시지 추가 (중복 방지)
+  const addQuizMessage = (content) => {
+    const { question, options, correctAnswer } = parseQuizMessage(content);
+
+    setMessages((prev) => [
+      ...prev,
+      { role: "assistant", type: "quiz", question, options, raw: content }
+    ]);
+
+    if (correctAnswer) {
+      setCorrectAnswers((prev) => [...prev, correctAnswer]);
+    }
+
+    // 새로운 문제 시작 시 답변 상태 초기화
+    setHasAnswered(false);
+  };
+
+  // 초기 Clova 메시지 요청 (첫 인사)
   useEffect(() => {
     if (initialFetched.current) return;
     initialFetched.current = true;
 
     const fetchInitialMessage = async () => {
       setIsWaitingForAI(true);
+
       try {
         const response = await axios.post(
           "/api/clova/startChat",
           { message: "안녕?" },
           { headers: { "Content-Type": "application/json" } }
         );
-        console.log("startChat 초기 응답:", response.data);
         const aiMessage =
           response.data.result?.message?.content ||
           "죄송합니다. 응답을 가져올 수 없습니다.";
-        addMessage("assistant", aiMessage);
+        addMessage("assistant", aiMessage.replace(/{user_name}/g, ""));
       } catch (error) {
-        console.log("startChat 초기 요청 에러:", error);
+        console.error("Clova API 오류:", error);
         addMessage("assistant", "죄송합니다. 오류가 발생했습니다.");
       } finally {
         setIsWaitingForAI(false);
@@ -56,92 +114,114 @@ const QuizPage = () => {
     fetchInitialMessage();
   }, []);
 
-  // 사용자 입력 처리 : 닉네임 유효 시 첫 문제 출력 및 quizRound를 1로 설정
+  // 사용자 입력 처리
   const fetchMessage = async (userMessage) => {
-    if (isWaitingForAI) return;
-    if (!userMessage.trim()) return;
+    if (isQuizMode && hasAnswered) return;
+    if (isWaitingForAI || !userMessage.trim()) return;
+    if (nicknameConfirmed && !isQuizMode) return;
 
-    // 확인 전이면 입력으로 처리
-    if (!nicknameConfirmed) {
-      addMessage("user", userMessage);
-      setIsWaitingForAI(true);
-      try {
-        const response = await axios.post(
-          "/api/clova/startChat",
-          { message: userMessage },
-          { headers: { "Content-Type": "application/json" } }
-        );
-        console.log("startChat (닉네임 입력) 응답:", response.data);
-        const aiMessage =
-          response.data.result?.message?.content ||
-          "죄송합니다. 응답을 가져올 수 없습니다.";
-        addMessage("assistant", aiMessage);
+    // 퀴즈 모드라면, 첫 클릭 후 답변 완료 처리
+    if (isQuizMode) {
+      setHasAnswered(true);
+    }
 
-        if (aiMessage.includes("닉네임이 살짝 길어요")) { // 응답에 '닉네임이 살짝 길어요' 있으면 유효하지 않은 것으로 처리
+    addMessage("user", userMessage);
+    setIsWaitingForAI(true);
 
-        } else { // 닉네임이 확인된 경우
+    try {
+      // 닉네임 입력 단계
+      if (!nicknameConfirmed) {
+        const response = await axios.post("/api/clova/startChat", { message: userMessage });
+        const aiMessage = response.data.result?.message?.content || "응답을 가져올 수 없습니다.";
+        //console.log(`Clova 응답 (닉네임 단계): ${aiMessage}`);
+
+        if (aiMessage.includes("닉네임이 살짝 길어요")) {
+          addMessage("assistant", "입력하신 닉네임이 유효하지 않습니다. 다시 입력해주세요.");
+        } else {
+          addMessage("assistant", aiMessage);
+          setNickname(userMessage);
           setNicknameConfirmed(true);
 
-          // startQuiz API 호출해 첫 퀴즈 문제 출력
-          const quizResponse = await axios.post(
-            "/api/clova/startQuiz",
-            { message: "" },
-            { headers: { "Content-Type": "application/json" } }
-          );
-          console.log("startQuiz 첫 문제 응답:", quizResponse.data);
-          const quizMessage =
-            quizResponse.data.result?.message?.content ||
-            "죄송합니다. 응답을 가져올 수 없습니다.";
-          addMessage("assistant", quizMessage);
+          // 첫 번째 문제 출제 요청
+          const quizResponse = await axios.post("/api/clova/startQuiz", { message: "퀴즈 시작" });
+          let quizMessage = quizResponse.data.result?.message?.content || "응답을 가져올 수 없습니다.";
+          addQuizMessage(quizMessage.replace(/{user_name}/g, userMessage));
+          console.log(`Clova 응답 (퀴즈 시작): ${quizMessage}`);
 
           setIsQuizMode(true);
           setQuizRound(1);
         }
-      } catch (error) {
-        console.log("닉네임 처리 중 에러:", error);
-        addMessage("assistant", "죄송합니다. 오류가 발생했습니다.");
-      } finally {
-        setIsWaitingForAI(false);
-      }
-    } else {
-      addMessage("user", userMessage);
-      setIsWaitingForAI(true);
+      } else {
+        // 퀴즈 진행
+        const currentCorrectAnswer = correctAnswers[quizRound - 1] || "";
+        const isCorrect = userMessage.trim() === currentCorrectAnswer;
 
-      try {
-        const response = await axios.post(
-          "/api/clova/startQuiz",
-          { message: userMessage },
-          { headers: { "Content-Type": "application/json" } }
-        );
+        if (isCorrect) {
+          setCorrectCount((prev) => prev + 1);
+        }
 
-        console.log(`startQuiz round ${quizRound} 응답:`, response.data);
+        //console.log(`현재 정답 리스트: ${correctAnswers}`);
+        //console.log(`현재 라운드: ${quizRound}, 비교 대상 정답: ${currentCorrectAnswer}`);
+        //console.log(`사용자 입력: ${userMessage}, 정답 여부: ${isCorrect}`);
 
-        const quizMessage =
-          response.data.result?.message?.content ||
-          "죄송합니다. 응답을 가져올 수 없습니다.";
-        addMessage("assistant", quizMessage);
+        setTimeout(() => {
+          let requestMessage;
 
-        setQuizRound((prev) => {
-          const nextRound = prev + 1;
-          if (nextRound >= 5) { // 5문제가 완료되면 최종 메시지 출력 및 퀴즈 종료 처리
-            setIsQuizMode(false);
-            addMessage("assistant", "퀴즈가 모두 종료되었습니다. 결과를 확인하세요.");
+          if (quizRound < 5) {
+            requestMessage = `현재 ${quizRound + 1}번째 문제 진행중 입니다. \n다음 문제`;
+          } else {
+            requestMessage = `점수 출력중`;
+
+            // 최종 점수 계산
+            const finalScore = correctCount * 20;
+
+            setTimeout(() => {
+              if (finalScore === 100) {
+                addMessage("assistant", `짜잔! 🎊 ${nickname}님의 신조어 점수는 ${finalScore}점이에요! 대단해요!`, { className: "state-score" });
+                requestMessage = `퀴즈 종료`;
+                setIsQuizMode(false); // 퀴즈모드 종료
+              } else {
+                addMessage("assistant", `${nickname}님의 신조어 점수는 ${finalScore}점이에요.`, { className: "state-score" });
+                requestMessage = `정답 확인`;
+                setIsQuizMode(false); // 퀴즈모드 종료
+              }
+            }, 1000);
           }
-          return nextRound;
-        });
-      } catch (error) {
-        console.log("퀴즈 처리 중 에러:", error);
-        addMessage("assistant", "죄송합니다. 오류가 발생했습니다.");
-      } finally {
-        setIsWaitingForAI(false);
+
+          console.log(`출제 요청 메시지: ${requestMessage}`);
+
+          axios.post("/api/clova/startQuiz", {
+            message: requestMessage,
+            nickname,
+          })
+          .then((quizResponse) => {
+            let quizMessage = quizResponse.data.result?.message?.content || "응답을 가져올 수 없습니다.";
+            //console.log("퀴즈 API 응답:", JSON.stringify(quizResponse.data));
+            console.log(`Clova 응답 (퀴즈 진행): ${quizMessage}`);
+
+            addQuizMessage(quizMessage.replace(/{user_name}/g, nickname));
+            setQuizRound((prev) => (prev < 5 ? prev + 1 : prev));
+          })
+          .catch((error) => {
+            console.error("🚨 Clova API 오류:", error);
+            addMessage("assistant", "죄송합니다. 오류가 발생했습니다.");
+          })
+          .finally(() => {
+            setIsWaitingForAI(false);
+          });
+        }, 0);
       }
+    } catch (error) {
+      addMessage("assistant", "오류가 발생했습니다.");
+    } finally {
+      setIsWaitingForAI(false);
     }
   };
 
   return (
     <div id="wrap" className="quiz-page">
       <HeaderSub />
-      <main id="main" role="main">
+      <main id="main" role="main" ref={chatWrapRef}>
         <div className="chat-wrap">
           {messages.map((msg, index) => (
             <motion.div
@@ -151,15 +231,31 @@ const QuizPage = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
             >
-              <div className="chat-item">{msg.content}</div>
+              {msg.type === "quiz" ? (
+                <div className={`chat-item ${msg.className || ""} ${isQuizMode ? "state-quiz" : ""}`}>
+                  {msg.question}
+                  <div className="options">
+                    {msg.options.map((option, idx) => (
+                      <button
+                        key={idx}
+                        disabled={!isQuizMode}
+                        onClick={() => fetchMessage(option)}
+                      >
+                        {option}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <div className="chat-item">{msg.content}</div>
+              )}
             </motion.div>
           ))}
         </div>
       </main>
       <ChatBar
         onSendMessage={fetchMessage}
-        // 퀴즈 모드가 종료되었거나 AI 응답 대기 시 입력 비활성화
-        isDisabled={isWaitingForAI || (nicknameConfirmed && !isQuizMode && quizRound >= 5)}
+        isDisabled={isWaitingForAI || (nicknameConfirmed && !isQuizMode)}
         isQuizMode={isQuizMode}
       />
     </div>
