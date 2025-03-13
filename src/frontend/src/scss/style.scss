@@ -830,7 +830,6 @@
 
     .chat-item {
       position: relative;
-      max-width: 270px;
       padding: 8px 10px;
       border: 1px solid rgba(160, 160, 160, 0.1);
       border-radius: 16px 16px 16px 0.5px;
@@ -840,6 +839,27 @@
       font-family: 'Pretendard', sans-serif;
       line-height: 21px;
       letter-spacing: -0.02em;
+    }
+
+    &:not(.user) {
+
+      .chat-item::after {
+        content: "";
+        position: absolute;
+        right: 10px;
+        top: 8px;
+        width: 26px;
+        height: 21px;
+        background: url("../assets/icon/face.svg") no-repeat center;
+        background-size: contain;
+      }
+
+      &.state-quiz {
+
+        .chat-item::after {
+          background: url("../assets/icon/face2.svg") no-repeat center;
+        }
+      }
     }
 
     .options {
@@ -869,33 +889,16 @@
       }
     }
 
-    &.assistant {
+    &.assistant,
+    &.system {
 
       .chat-item {
         width: 270px;
         padding-right: 40px;
 
-        &:after {
-          content: "";
-          position: absolute;
-          right: 10px;
-          top: 8px;
-          width: 26px;
-          height: 21px;
-          background: url("../assets/icon/face.svg") no-repeat center;
-          background-size: contain;
-        }
-
-        &.state-quiz {
-
-          &:after {
-            background: url("../assets/icon/face2.svg") no-repeat center;
-          }
-        }
-
         &.state-score {
-          border: 1px solid rgba(255, 217, 106, 0.2) !important;
-          background: linear-gradient(0deg, #FFFFFF, #FFFFFF), linear-gradient(136.83deg, rgba(255, 206, 63, 0.6) 10.82%, #FFFAEC 104.04%) !important;
+          border-color: rgba(255, 217, 106, 0.05) !important;
+          background: linear-gradient(136.83deg, rgba(255, 206, 63, 0.6) 10.82%, #FFFAEC 100%) !important;
           box-shadow: 1px 1px 10px 0 rgba(255, 217, 106, 0.1) inset !important;
 
           &:after {
@@ -909,6 +912,7 @@
       justify-content: flex-end;
 
       .chat-item {
+        max-width: 270px;
         border-radius: 16px 16px 0.5px 16px;
         background: linear-gradient(120deg, #00c4b8 50%, #3db4f7);
         font-weight: 300;
