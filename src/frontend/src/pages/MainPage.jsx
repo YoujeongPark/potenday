@@ -51,7 +51,6 @@ const MainPage = () => {
             <CategoryList />
           </section>
         </div>
-        <ChatShortCut />
       </main>
     </div>
   );
