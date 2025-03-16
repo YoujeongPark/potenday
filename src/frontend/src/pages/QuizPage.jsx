@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import HeaderSub from "../layout/HeaderSub";  // 프로젝트 구조에 맞춰 경로 조정
 import ChatBar from "../component/ChatBar";   // 프로젝트 구조에 맞춰 경로 조정
@@ -6,6 +6,7 @@ import axios from "axios";
 
 const QuizPage = () => {
   const [messages, setMessages] = useState([]);
+  const mainRef = useRef(null);
 
   // [AI 응답 대기 / 대화 종료 / 일반 채팅 모드]
   const [isWaiting, setIsWaiting] = useState(false);
@@ -22,6 +23,13 @@ const QuizPage = () => {
   const [quizQuestions, setQuizQuestions] = useState([]);
   const [currentQuizIndex, setCurrentQuizIndex] = useState(0);
   const [quizUserAnswers, setQuizUserAnswers] = useState([]);
+
+  // 메시지가 추가될 때마다 스크롤을 하단으로 이동
+  useEffect(() => {
+    if (mainRef.current) {
+      mainRef.current.scrollTop = mainRef.current.scrollHeight;
+    }
+  }, [messages]);
 
   //---------------------------------------------------------------------------
   // [메시지 추가 헬퍼]
@@ -456,7 +464,7 @@ const QuizPage = () => {
   return (
     <div id="wrap" className="quiz-page">
       <HeaderSub />
-      <main id="main" role="main">
+      <main id="main" role="main" ref={mainRef}>
         {/* 메시지 영역 */}
         <div className="chat-wrap">
           {messages.map((msg) => (
