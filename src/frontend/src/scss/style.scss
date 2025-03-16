@@ -744,8 +744,6 @@
     #main {
       overflow-y: auto;
       height: 100%;
-      padding-top: variables.$headerHeight;
-      padding-bottom: variables.$chatBarHeight;
       -ms-overflow-style: none;
       scrollbar-width: none;
 
@@ -810,6 +808,8 @@
     justify-content: flex-end;
     min-height: 100%;
     padding: 12px 16px;
+    padding-top: calc(#{variables.$headerHeight} + 12px);
+    padding-bottom: calc(#{variables.$footerHeight} + 12px);
     -webkit-overflow-scrolling: touch;
     -ms-overflow-style: none;
     scrollbar-width: none;
